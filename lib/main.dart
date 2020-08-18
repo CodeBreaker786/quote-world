@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quoteworld/main_screeen.dart';
+import 'package:quoteworld/screens/bottom_navigation_pade.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-
-      home:  MainScreen(),
+      home: NavigationScreen(),
     );
   }
 }
-
