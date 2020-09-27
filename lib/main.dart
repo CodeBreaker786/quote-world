@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+ 
 import 'package:quoteworld/screens/bottom_navigation_pade.dart';
 
 void main() {
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.grey, accentColor: Colors.white),
       title: 'Flutter Demo',
       home: NavigationScreen(),
     );

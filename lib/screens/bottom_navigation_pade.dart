@@ -1,8 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:quoteworld/screens/dashboard.dart';
-
-import '../web_scraper_screeen.dart';
+import 'package:quoteworld/screens/phrase_dashboard.dart';
+import 'package:quoteworld/screens/tabbar_screen.dart';
+ 
+import 'dashboard.dart';
 
 class NavigationScreen extends StatefulWidget {
   @override
@@ -11,11 +12,11 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   PageController pageController;
-  int pageIndex = 2;
+  int pageIndex = 0;
 
   @override
   void initState() {
-    pageController = PageController(initialPage: 2);
+    pageController = PageController(initialPage: 0);
     super.initState();
   }
   // List<Widget> screens = [HomeScreen(), Details(), Profile(), AuthPage()];
@@ -46,11 +47,23 @@ class _NavigationScreenState extends State<NavigationScreen> {
         height: 50,
 
         items: [
-          Icon(Icons.favorite_border),
+          Container(
+              height: 25,
+              child: Image.asset(
+                'assets/logo3.png',
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              )),
+          Container(
+              height: 25,
+              child: Image.asset(
+                'assets/phrase.png',
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              )),
           Icon(Icons.system_update),
-          Icon(Icons.home_outlined),
-          Icon(Icons.call_to_action),
-          Icon(Icons.person_pin),
+          // Icon(Icons.phonelink_erase),
+          // Icon(Icons.person_pin),
         ],
         backgroundColor: Colors.grey,
         buttonBackgroundColor: Colors.white,
@@ -63,23 +76,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
       body: PageView(
         children: <Widget>[
-          webScraperScreen(
-            url: 'https://www.goodreads.com/quotes/tag/love?page=',
-            title: "Love Quotes",
-          ),
-          webScraperScreen(
-            url: 'https://www.goodreads.com/quotes/tag/love?page=',
-            title: "Love Quotes",
-          ),
           DashBoard(),
-          webScraperScreen(
-            url: 'https://www.goodreads.com/quotes/tag/love?page=',
-            title: "Love Quotes",
-          ),
-          webScraperScreen(
-            url: 'https://www.goodreads.com/quotes/tag/love?page=',
-            title: "Love Quotes",
-          )
+
+          PhraseScraper(),
+          TabBarForCollection()
+
+          //  PhraseScraper(),
+          // WebScraperScreen(
+          //   url: 'https://www.goodreads.com/quotes/tag/love?page=',
+          //   title: "Love Quotes",
+          // )
         ],
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),

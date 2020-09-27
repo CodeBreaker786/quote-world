@@ -1,6 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+ 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:quoteworld/models/dashboard.dart';
+
+import '../utils/navigation_style.dart';
+import '../web_scraper_screeen.dart';
+import 'no_internet_screen.dart';
 
 class DashBoard extends StatelessWidget {
   @override
@@ -15,7 +20,26 @@ class ImageSlider extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey,
-          title: Text("Category"),
+          title: Text("Quotes"),
+          actions: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(right: 18),
+                child: StreamBuilder<ConnectivityResult>(
+                    stream: Connectivity().onConnectivityChanged,
+                    builder: (context, data) {
+                      if (data.data == ConnectivityResult.none) {
+                        return Icon(
+                          Icons.signal_wifi_off,
+                          color: Colors.red,
+                        );
+                      } else {
+                        return Icon(
+                          Icons.wifi,
+                          color: Colors.greenAccent,
+                        );
+                      }
+                    }))
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -24,34 +48,52 @@ class ImageSlider extends StatelessWidget {
             crossAxisSpacing: 10,
             semanticChildCount: 2,
             children: dashboardItem
-                .map((e) => Container(
-                      height: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 7,
-                        ),
-                        child: Card(
-                          color: Colors.grey,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(e.img_link),
-                                ),
-                                borderRadius: BorderRadius.circular(30)),
+                .map((e) => InkWell(
+                      onTap: () async {
+                        Connectivity().checkConnectivity().then((value) {
+                          if (value == ConnectivityResult.none) {
+                            Navigator.push(
+                                context, FadeRoute(page: NoInternetScreen()));
+                          } else {
+                            Navigator.push(
+                                context,
+                                SizeRoute(
+                                    page: WebScraperScreen(
+                                  url: e.screen_link,
+                                  title: e.category_Name,
+                                )));
+                          }
+                        });
+                      },
+                      child: Container(
+                        height: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 7,
+                          ),
+                          child: Card(
+                            color: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             child: Container(
-                              alignment: Alignment.bottomCenter,
+                              decoration: BoxDecoration(
+                                  color: Colors.white54,
+                                  image: DecorationImage(
+                                    fit: BoxFit.scaleDown,
+                                    image: AssetImage(e.img_link),
+                                  ),
+                                  borderRadius: BorderRadius.circular(30)),
                               child: Container(
-                                  child: Text(
-                                e.category_Name,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                    child: Text(
+                                  e.category_Name,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                              ),
                             ),
                           ),
                         ),
@@ -86,41 +128,5 @@ class ImageSlider extends StatelessWidget {
 //              itemBuilder: (context, index) {
 //                return _buildSliderCard(index);
 //              });
-  }
-
-  Widget _buildSliderCard(int index) {
-    return Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: InkWell(
-          onTap: () {},
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            clipBehavior: Clip.antiAlias,
-            elevation: 10,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: CachedNetworkImageProvider('hyg'),
-                      fit: BoxFit.cover)),
-              child: Card(
-                color: Colors.white30,
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Text(
-                    'Society Name',
-                    //searchResults[index].ownerName,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ));
   }
 }
