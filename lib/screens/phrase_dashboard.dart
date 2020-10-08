@@ -7,7 +7,8 @@ import 'package:quoteworld/curd/moor_curd.dart';
 import 'package:quoteworld/screens/phrase_list_screen.dart';
 import 'package:quoteworld/utils/constent.dart';
 import 'package:quoteworld/utils/navigation_style.dart';
- 
+
+import 'drawer.dart';
 import 'no_internet_screen.dart';
 
 class PhraseScraper extends StatefulWidget {
@@ -45,6 +46,7 @@ class _PhraseScraperState extends State<PhraseScraper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
       backgroundColor: Colors.white70.withOpacity(0.9),
       appBar: AppBar(
         backgroundColor: Colors.grey,

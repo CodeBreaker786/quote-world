@@ -1,7 +1,7 @@
 import 'package:moor_flutter/moor_flutter.dart';
- 
 import 'package:quoteworld/curd/moor_curd.dart';
 import 'package:quoteworld/models/quote_model.dart';
+
 part 'quotes_curd.g.dart';
 
 @UseDao(

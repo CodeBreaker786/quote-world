@@ -1,7 +1,7 @@
- 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:quoteworld/models/dashboard.dart';
+import 'package:quoteworld/screens/drawer.dart';
 
 import '../utils/navigation_style.dart';
 import '../web_scraper_screeen.dart';
@@ -18,9 +18,17 @@ class ImageSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MyDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.grey,
-          title: Text("Quotes"),
+          title: Row(
+            children: [
+              Container(
+                  height: 40,
+                  child: Image.asset('assets/logos/splashlogo.png')),
+              Text("uotes"),
+            ],
+          ),
           actions: <Widget>[
             Padding(
                 padding: const EdgeInsets.only(right: 18),

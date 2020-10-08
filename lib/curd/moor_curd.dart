@@ -5,7 +5,6 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as paths;
 import 'package:quoteworld/models/phrase_model.dart';
 import 'package:quoteworld/models/quote_model.dart';
- 
 
 part 'moor_curd.g.dart';
 
@@ -22,7 +21,7 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 3;
 
-  static AppDatabase _constructDb({bool logStatements = false}) {
+  static AppDatabase _constructDb({bool logStatements8 = false}) {
     final executor = LazyDatabase(() async {
       final dataDir = await paths.getApplicationDocumentsDirectory();
       final dbFile = File(p.join(dataDir.path, 'db.sqlite'));

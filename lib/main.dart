@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
- 
 import 'package:quoteworld/screens/bottom_navigation_pade.dart';
 
 void main() {
