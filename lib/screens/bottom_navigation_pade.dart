@@ -1,10 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:quoteworld/screens/idioms.dart';
-import 'package:quoteworld/screens/phrase_dashboard.dart';
+import 'package:quoteworld/screens/idioms/idioms.dart';
+import 'package:quoteworld/screens/last_words/last_words.dart';
+import 'package:quoteworld/screens/phrase/phrase_dashboard.dart';
 import 'package:quoteworld/screens/tabbar_screen.dart';
 
-import 'dashboard.dart';
+import 'quotes/dashboard.dart';
 
 class NavigationScreen extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           Container(
               height: 25,
               child: Image.asset(
-                'assets/logos/splashlogo.png',
+                'assets/logo3.png',
                 fit: BoxFit.contain,
                 filterQuality: FilterQuality.high,
               )),
@@ -63,6 +64,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 filterQuality: FilterQuality.high,
               )),
           Icon(Icons.system_update),
+          Text(
+            'i',
+            style: TextStyle(
+              fontSize: 30,
+              fontFamily: 'Myfont',
+            ),
+          ),
           Icon(Icons.system_update),
           // Icon(Icons.phonelink_erase),
           // Icon(Icons.person_pin),
@@ -82,6 +90,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
           PhraseScraper(),
           IdiomsScraper(),
+          LastWordsScraper(),
           TabBarForCollection()
 
           //  PhraseScraper(),

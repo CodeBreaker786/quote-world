@@ -694,14 +694,637 @@ class $PhrasesTable extends Phrases with TableInfo<$PhrasesTable, Phrase> {
   }
 }
 
+class Idiom extends DataClass implements Insertable<Idiom> {
+  final int id;
+  final String idiom;
+  final String idiomMeaningLink;
+  Idiom({@required this.id, this.idiom, this.idiomMeaningLink});
+  factory Idiom.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return Idiom(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      idiom:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}idiom']),
+      idiomMeaningLink: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}idiom_meaning_link']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || idiom != null) {
+      map['idiom'] = Variable<String>(idiom);
+    }
+    if (!nullToAbsent || idiomMeaningLink != null) {
+      map['idiom_meaning_link'] = Variable<String>(idiomMeaningLink);
+    }
+    return map;
+  }
+
+  IdiomsCompanion toCompanion(bool nullToAbsent) {
+    return IdiomsCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      idiom:
+          idiom == null && nullToAbsent ? const Value.absent() : Value(idiom),
+      idiomMeaningLink: idiomMeaningLink == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idiomMeaningLink),
+    );
+  }
+
+  factory Idiom.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Idiom(
+      id: serializer.fromJson<int>(json['id']),
+      idiom: serializer.fromJson<String>(json['idiom']),
+      idiomMeaningLink: serializer.fromJson<String>(json['idiomMeaningLink']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'idiom': serializer.toJson<String>(idiom),
+      'idiomMeaningLink': serializer.toJson<String>(idiomMeaningLink),
+    };
+  }
+
+  Idiom copyWith({int id, String idiom, String idiomMeaningLink}) => Idiom(
+        id: id ?? this.id,
+        idiom: idiom ?? this.idiom,
+        idiomMeaningLink: idiomMeaningLink ?? this.idiomMeaningLink,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Idiom(')
+          ..write('id: $id, ')
+          ..write('idiom: $idiom, ')
+          ..write('idiomMeaningLink: $idiomMeaningLink')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf(
+      $mrjc(id.hashCode, $mrjc(idiom.hashCode, idiomMeaningLink.hashCode)));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is Idiom &&
+          other.id == this.id &&
+          other.idiom == this.idiom &&
+          other.idiomMeaningLink == this.idiomMeaningLink);
+}
+
+class IdiomsCompanion extends UpdateCompanion<Idiom> {
+  final Value<int> id;
+  final Value<String> idiom;
+  final Value<String> idiomMeaningLink;
+  const IdiomsCompanion({
+    this.id = const Value.absent(),
+    this.idiom = const Value.absent(),
+    this.idiomMeaningLink = const Value.absent(),
+  });
+  IdiomsCompanion.insert({
+    this.id = const Value.absent(),
+    this.idiom = const Value.absent(),
+    this.idiomMeaningLink = const Value.absent(),
+  });
+  static Insertable<Idiom> custom({
+    Expression<int> id,
+    Expression<String> idiom,
+    Expression<String> idiomMeaningLink,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (idiom != null) 'idiom': idiom,
+      if (idiomMeaningLink != null) 'idiom_meaning_link': idiomMeaningLink,
+    });
+  }
+
+  IdiomsCompanion copyWith(
+      {Value<int> id, Value<String> idiom, Value<String> idiomMeaningLink}) {
+    return IdiomsCompanion(
+      id: id ?? this.id,
+      idiom: idiom ?? this.idiom,
+      idiomMeaningLink: idiomMeaningLink ?? this.idiomMeaningLink,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (idiom.present) {
+      map['idiom'] = Variable<String>(idiom.value);
+    }
+    if (idiomMeaningLink.present) {
+      map['idiom_meaning_link'] = Variable<String>(idiomMeaningLink.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IdiomsCompanion(')
+          ..write('id: $id, ')
+          ..write('idiom: $idiom, ')
+          ..write('idiomMeaningLink: $idiomMeaningLink')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $IdiomsTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _idiomMeta = const VerificationMeta('idiom');
+  GeneratedTextColumn _idiom;
+  @override
+  GeneratedTextColumn get idiom => _idiom ??= _constructIdiom();
+  GeneratedTextColumn _constructIdiom() {
+    return GeneratedTextColumn(
+      'idiom',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idiomMeaningLinkMeta =
+      const VerificationMeta('idiomMeaningLink');
+  GeneratedTextColumn _idiomMeaningLink;
+  @override
+  GeneratedTextColumn get idiomMeaningLink =>
+      _idiomMeaningLink ??= _constructIdiomMeaningLink();
+  GeneratedTextColumn _constructIdiomMeaningLink() {
+    return GeneratedTextColumn(
+      'idiom_meaning_link',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, idiom, idiomMeaningLink];
+  @override
+  $IdiomsTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'idioms';
+  @override
+  final String actualTableName = 'idioms';
+  @override
+  VerificationContext validateIntegrity(Insertable<Idiom> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+    }
+    if (data.containsKey('idiom')) {
+      context.handle(
+          _idiomMeta, idiom.isAcceptableOrUnknown(data['idiom'], _idiomMeta));
+    }
+    if (data.containsKey('idiom_meaning_link')) {
+      context.handle(
+          _idiomMeaningLinkMeta,
+          idiomMeaningLink.isAcceptableOrUnknown(
+              data['idiom_meaning_link'], _idiomMeaningLinkMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Idiom map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Idiom.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $IdiomsTable createAlias(String alias) {
+    return $IdiomsTable(_db, alias);
+  }
+}
+
+class LastWord extends DataClass implements Insertable<LastWord> {
+  final int id;
+  final String name;
+  final String lastWords;
+  final String imageLink;
+  final String lastWordsReceiver;
+  final String deathAndBirthDates;
+  LastWord(
+      {@required this.id,
+      this.name,
+      this.lastWords,
+      this.imageLink,
+      this.lastWordsReceiver,
+      this.deathAndBirthDates});
+  factory LastWord.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return LastWord(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      lastWords: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}last_words']),
+      imageLink: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}image_link']),
+      lastWordsReceiver: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}last_words_receiver']),
+      deathAndBirthDates: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}death_and_birth_dates']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || lastWords != null) {
+      map['last_words'] = Variable<String>(lastWords);
+    }
+    if (!nullToAbsent || imageLink != null) {
+      map['image_link'] = Variable<String>(imageLink);
+    }
+    if (!nullToAbsent || lastWordsReceiver != null) {
+      map['last_words_receiver'] = Variable<String>(lastWordsReceiver);
+    }
+    if (!nullToAbsent || deathAndBirthDates != null) {
+      map['death_and_birth_dates'] = Variable<String>(deathAndBirthDates);
+    }
+    return map;
+  }
+
+  LastWordsCompanion toCompanion(bool nullToAbsent) {
+    return LastWordsCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      lastWords: lastWords == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastWords),
+      imageLink: imageLink == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageLink),
+      lastWordsReceiver: lastWordsReceiver == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastWordsReceiver),
+      deathAndBirthDates: deathAndBirthDates == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deathAndBirthDates),
+    );
+  }
+
+  factory LastWord.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return LastWord(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      lastWords: serializer.fromJson<String>(json['lastWords']),
+      imageLink: serializer.fromJson<String>(json['imageLink']),
+      lastWordsReceiver: serializer.fromJson<String>(json['lastWordsReceiver']),
+      deathAndBirthDates:
+          serializer.fromJson<String>(json['deathAndBirthDates']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'lastWords': serializer.toJson<String>(lastWords),
+      'imageLink': serializer.toJson<String>(imageLink),
+      'lastWordsReceiver': serializer.toJson<String>(lastWordsReceiver),
+      'deathAndBirthDates': serializer.toJson<String>(deathAndBirthDates),
+    };
+  }
+
+  LastWord copyWith(
+          {int id,
+          String name,
+          String lastWords,
+          String imageLink,
+          String lastWordsReceiver,
+          String deathAndBirthDates}) =>
+      LastWord(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        lastWords: lastWords ?? this.lastWords,
+        imageLink: imageLink ?? this.imageLink,
+        lastWordsReceiver: lastWordsReceiver ?? this.lastWordsReceiver,
+        deathAndBirthDates: deathAndBirthDates ?? this.deathAndBirthDates,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LastWord(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('lastWords: $lastWords, ')
+          ..write('imageLink: $imageLink, ')
+          ..write('lastWordsReceiver: $lastWordsReceiver, ')
+          ..write('deathAndBirthDates: $deathAndBirthDates')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          name.hashCode,
+          $mrjc(
+              lastWords.hashCode,
+              $mrjc(
+                  imageLink.hashCode,
+                  $mrjc(lastWordsReceiver.hashCode,
+                      deathAndBirthDates.hashCode))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is LastWord &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.lastWords == this.lastWords &&
+          other.imageLink == this.imageLink &&
+          other.lastWordsReceiver == this.lastWordsReceiver &&
+          other.deathAndBirthDates == this.deathAndBirthDates);
+}
+
+class LastWordsCompanion extends UpdateCompanion<LastWord> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> lastWords;
+  final Value<String> imageLink;
+  final Value<String> lastWordsReceiver;
+  final Value<String> deathAndBirthDates;
+  const LastWordsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.lastWords = const Value.absent(),
+    this.imageLink = const Value.absent(),
+    this.lastWordsReceiver = const Value.absent(),
+    this.deathAndBirthDates = const Value.absent(),
+  });
+  LastWordsCompanion.insert({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.lastWords = const Value.absent(),
+    this.imageLink = const Value.absent(),
+    this.lastWordsReceiver = const Value.absent(),
+    this.deathAndBirthDates = const Value.absent(),
+  });
+  static Insertable<LastWord> custom({
+    Expression<int> id,
+    Expression<String> name,
+    Expression<String> lastWords,
+    Expression<String> imageLink,
+    Expression<String> lastWordsReceiver,
+    Expression<String> deathAndBirthDates,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (lastWords != null) 'last_words': lastWords,
+      if (imageLink != null) 'image_link': imageLink,
+      if (lastWordsReceiver != null) 'last_words_receiver': lastWordsReceiver,
+      if (deathAndBirthDates != null)
+        'death_and_birth_dates': deathAndBirthDates,
+    });
+  }
+
+  LastWordsCompanion copyWith(
+      {Value<int> id,
+      Value<String> name,
+      Value<String> lastWords,
+      Value<String> imageLink,
+      Value<String> lastWordsReceiver,
+      Value<String> deathAndBirthDates}) {
+    return LastWordsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      lastWords: lastWords ?? this.lastWords,
+      imageLink: imageLink ?? this.imageLink,
+      lastWordsReceiver: lastWordsReceiver ?? this.lastWordsReceiver,
+      deathAndBirthDates: deathAndBirthDates ?? this.deathAndBirthDates,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (lastWords.present) {
+      map['last_words'] = Variable<String>(lastWords.value);
+    }
+    if (imageLink.present) {
+      map['image_link'] = Variable<String>(imageLink.value);
+    }
+    if (lastWordsReceiver.present) {
+      map['last_words_receiver'] = Variable<String>(lastWordsReceiver.value);
+    }
+    if (deathAndBirthDates.present) {
+      map['death_and_birth_dates'] = Variable<String>(deathAndBirthDates.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LastWordsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('lastWords: $lastWords, ')
+          ..write('imageLink: $imageLink, ')
+          ..write('lastWordsReceiver: $lastWordsReceiver, ')
+          ..write('deathAndBirthDates: $deathAndBirthDates')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LastWordsTable extends LastWords
+    with TableInfo<$LastWordsTable, LastWord> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $LastWordsTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _lastWordsMeta = const VerificationMeta('lastWords');
+  GeneratedTextColumn _lastWords;
+  @override
+  GeneratedTextColumn get lastWords => _lastWords ??= _constructLastWords();
+  GeneratedTextColumn _constructLastWords() {
+    return GeneratedTextColumn(
+      'last_words',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _imageLinkMeta = const VerificationMeta('imageLink');
+  GeneratedTextColumn _imageLink;
+  @override
+  GeneratedTextColumn get imageLink => _imageLink ??= _constructImageLink();
+  GeneratedTextColumn _constructImageLink() {
+    return GeneratedTextColumn(
+      'image_link',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _lastWordsReceiverMeta =
+      const VerificationMeta('lastWordsReceiver');
+  GeneratedTextColumn _lastWordsReceiver;
+  @override
+  GeneratedTextColumn get lastWordsReceiver =>
+      _lastWordsReceiver ??= _constructLastWordsReceiver();
+  GeneratedTextColumn _constructLastWordsReceiver() {
+    return GeneratedTextColumn(
+      'last_words_receiver',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _deathAndBirthDatesMeta =
+      const VerificationMeta('deathAndBirthDates');
+  GeneratedTextColumn _deathAndBirthDates;
+  @override
+  GeneratedTextColumn get deathAndBirthDates =>
+      _deathAndBirthDates ??= _constructDeathAndBirthDates();
+  GeneratedTextColumn _constructDeathAndBirthDates() {
+    return GeneratedTextColumn(
+      'death_and_birth_dates',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, lastWords, imageLink, lastWordsReceiver, deathAndBirthDates];
+  @override
+  $LastWordsTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'last_words';
+  @override
+  final String actualTableName = 'last_words';
+  @override
+  VerificationContext validateIntegrity(Insertable<LastWord> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
+    }
+    if (data.containsKey('last_words')) {
+      context.handle(_lastWordsMeta,
+          lastWords.isAcceptableOrUnknown(data['last_words'], _lastWordsMeta));
+    }
+    if (data.containsKey('image_link')) {
+      context.handle(_imageLinkMeta,
+          imageLink.isAcceptableOrUnknown(data['image_link'], _imageLinkMeta));
+    }
+    if (data.containsKey('last_words_receiver')) {
+      context.handle(
+          _lastWordsReceiverMeta,
+          lastWordsReceiver.isAcceptableOrUnknown(
+              data['last_words_receiver'], _lastWordsReceiverMeta));
+    }
+    if (data.containsKey('death_and_birth_dates')) {
+      context.handle(
+          _deathAndBirthDatesMeta,
+          deathAndBirthDates.isAcceptableOrUnknown(
+              data['death_and_birth_dates'], _deathAndBirthDatesMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LastWord map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return LastWord.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $LastWordsTable createAlias(String alias) {
+    return $LastWordsTable(_db, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $QuotesTable _quotes;
   $QuotesTable get quotes => _quotes ??= $QuotesTable(this);
   $PhrasesTable _phrases;
   $PhrasesTable get phrases => _phrases ??= $PhrasesTable(this);
+  $IdiomsTable _idioms;
+  $IdiomsTable get idioms => _idioms ??= $IdiomsTable(this);
+  $LastWordsTable _lastWords;
+  $LastWordsTable get lastWords => _lastWords ??= $LastWordsTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [quotes, phrases];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [quotes, phrases, idioms, lastWords];
 }

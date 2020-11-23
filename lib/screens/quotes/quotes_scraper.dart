@@ -10,14 +10,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
-import 'package:quoteworld/screens/no_internet_screen.dart';
+import 'package:quoteworld/utils/no_internet_screen.dart';
 import 'package:quoteworld/utils/snak_bar.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:social_share/social_share.dart';
 import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
-
-import 'curd/moor_curd.dart';
-import 'curd/quotes_curd/quotes_curd.dart';
+import '../../curd/moor_curd.dart';
+import '../../curd/quotes_curd/quotes_curd.dart';
 
 class WebScraperScreen extends StatefulWidget {
   String url, title;
@@ -146,7 +145,6 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                 ],
               ),
               body: Container(
-                width: 400,
                 child: data.data != ConnectivityResult.none
                     ? ScrollablePositionedList.builder(
                         itemScrollController: itemScrollController,
@@ -212,7 +210,6 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                               child: Container(
                                                 child: Text(
                                                   quotesList[index].quoteWriter,
-                                                  textAlign: TextAlign.justify,
                                                   overflow: TextOverflow.fade,
                                                   style: TextStyle(
                                                     fontSize: 30,
@@ -429,7 +426,8 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                           );
                         })
                     : NoInternetScreen(),
-              ));
+              )
+              );
         });
   }
 

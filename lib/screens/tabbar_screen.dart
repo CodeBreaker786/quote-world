@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quoteworld/screens/phrases_collection_screen.dart';
-import 'package:quoteworld/screens/show_user_collection.dart';
+import 'package:quoteworld/screens/idioms/idioms.dart';
+import 'package:quoteworld/screens/idioms/show_user_idioms_collections.dart';
+import 'package:quoteworld/screens/phrase/show_user_phrase_colllection.dart';
+import 'package:quoteworld/screens/quotes/show_user_quotes_collection.dart';
 
 import 'drawer.dart';
 
@@ -8,7 +10,7 @@ class TabBarForCollection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 4,
       child: Scaffold(
         drawer: MyDrawer(),
         appBar: AppBar(
@@ -25,7 +27,15 @@ class TabBarForCollection extends StatelessWidget {
                         filterQuality: FilterQuality.high,
                       )),
                   text: "Quotes"),
-              Tab(icon: Icon(Icons.camera_alt), text: "Phrases")
+              Tab(icon: Container(
+                      height: 25,
+                      child: Image.asset(
+                        'assets/phrase.png',
+                        fit: BoxFit.contain,
+                        filterQuality: FilterQuality.high,
+                      )), text: "Phrases"),
+              Tab(icon: Icon(Icons.icecream), text: "Idioms"),
+              Tab(icon: Icon(Icons.icecream), text: "Idioms")
             ],
           ),
         ),
@@ -33,6 +43,8 @@ class TabBarForCollection extends StatelessWidget {
           children: [
             QuotesUserCollectionScreen(),
             PhrasesUserCollectionScreen(),
+            IdiomsUserCollections(),
+            IdiomsScraper()
           ],
         ),
       ),

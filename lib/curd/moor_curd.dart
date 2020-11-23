@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as paths;
+import 'package:quoteworld/models/idiom_model.dart';
+import 'package:quoteworld/models/last_word.dart';
 import 'package:quoteworld/models/phrase_model.dart';
 import 'package:quoteworld/models/quote_model.dart';
 
 part 'moor_curd.g.dart';
 
-@UseMoor(tables: [Quotes, Phrases])
+@UseMoor(tables: [Quotes, Phrases, Idioms, LastWords])
 class AppDatabase extends _$AppDatabase {
   static AppDatabase _db = _constructDb();
 

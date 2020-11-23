@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quoteworld/curd/idioms_curd/idioms_curd.dart';
 import 'package:quoteworld/curd/moor_curd.dart';
-import 'package:quoteworld/curd/phrases_curd/phrases_curd.dart';
-import 'package:quoteworld/screens/phrase_detail_screen.dart';
+import 'package:quoteworld/screens/idioms/idioms_meaning-screean.dart';
 import 'package:quoteworld/utils/logingindicator,.dart';
 import 'package:quoteworld/utils/navigation_style.dart';
 import 'package:quoteworld/utils/snak_bar.dart';
 import 'package:social_share/social_share.dart';
 
-class PhrasesUserCollectionScreen extends StatefulWidget {
-  PhrasesDao phrasesDao;
+class IdiomsUserCollections extends StatefulWidget {
+  
+IdiomsDao idiomsDao;
   var db;
-  PhrasesUserCollectionScreen() {
+  IdiomsUserCollections() {
     db = AppDatabase();
-    phrasesDao = PhrasesDao(db);
+    idiomsDao = IdiomsDao(db);
   }
 
   @override
-  _PhrasesUserCollectionScreenState createState() =>
-      _PhrasesUserCollectionScreenState();
+  _IdiomsUserCollectionsState createState() => _IdiomsUserCollectionsState();
 }
 
-class _PhrasesUserCollectionScreenState
-    extends State<PhrasesUserCollectionScreen> {
+class _IdiomsUserCollectionsState extends State<IdiomsUserCollections> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white70.withOpacity(0.9),
         body: FutureBuilder(
-            future: widget.phrasesDao.getAllQuotes(),
+            future:  widget.idiomsDao.getAllIdiom(),
             builder: (context, snapshot) {
-              List<Phrase> phrasesList = snapshot.data;
+              List<Idiom> idiomList = snapshot.data;
               if (snapshot.hasData) {
                 return ListView.builder(
-                  itemCount: phrasesList.length,
+                  itemCount: idiomList.length,
                   itemBuilder: (context, index) {
                     return Dismissible(
                       secondaryBackground: Container(
@@ -47,36 +46,36 @@ class _PhrasesUserCollectionScreenState
                       ),
                       background: Container(),
                       onDismissed: (dir) {
-                        widget.phrasesDao.deleteQuote(phrasesList[index]);
+                        widget.idiomsDao.deleteIdiom(idiomList[index]);
                         showSnackBar(
                           context: context,
-                          value: 'Phrase is Deleted from Databse Successfully',
+                          value: 'Idiom is Deleted from Databse Successfully',
                           icon: Icon(
                             Icons.delete,
                             color: Colors.red,
                           ),
                         );
                       },
-                      key: ValueKey(phrasesList[index]),
+                      key: ValueKey(idiomList[index]),
                       child: Card(
                           child: Column(
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  SizeRoute(
-                                      page: PhraseDetailScreen(
-                                          detailUrl:
-                                              phrasesList[index].phraseLink)));
-                            },
+                               Navigator.push(
+                                context,
+                                ScaleRoute(
+                                    page: IdiomsMeaningScraper(
+                                        url: idiomList[index].idiomMeaningLink)));
+                          },
+                            
                             child: ListTile(
                               title: Text(
-                                phrasesList[index].phraseTitile,
+                                idiomList[index].idiom,
                                 style: TextStyle(
                                     fontFamily: 'myfont', fontSize: 24),
                               ),
-                              subtitle: Text('Click for phrase origin'),
+                              subtitle: Text('Click for Idiom origin'),
                               trailing: Icon(Icons.arrow_forward_ios),
                             ),
                           ),
@@ -87,8 +86,8 @@ class _PhrasesUserCollectionScreenState
                               children: [
                                 InkWell(
                                     onTap: () async {
-                                      await widget.phrasesDao
-                                          .deleteQuote(phrasesList[index]);
+                                      await widget.idiomsDao
+                                          .deleteIdiom(idiomList[index]);
                                       showSnackBar(
                                         context: context,
                                         value:
@@ -100,7 +99,7 @@ class _PhrasesUserCollectionScreenState
                                       );
 
                                       setState(() {
-                                        phrasesList.remove(index);
+                                        idiomList.remove(index);
                                       });
                                     },
                                     child: Padding(
@@ -116,7 +115,7 @@ class _PhrasesUserCollectionScreenState
                                 InkWell(
                                     onTap: () async {
                                       SocialShare.copyToClipboard(
-                                              '${phrasesList[index].phraseTitile}')
+                                              '${idiomList[index].idiom}')
                                           .then((data) {
                                         print(data);
                                       });
@@ -140,9 +139,9 @@ class _PhrasesUserCollectionScreenState
                                 InkWell(
                                     onTap: () async {
                                       SocialShare.shareSms(
-                                              phrasesList[index].phraseTitile,
+                                              idiomList[index].idiom,
                                               trailingText:
-                                                  phrasesList[index].phraseTag,
+                                                 '',
                                               url: '')
                                           .then((data) {
                                         print(data);
@@ -159,9 +158,9 @@ class _PhrasesUserCollectionScreenState
                                 InkWell(
                                     onTap: () async {
                                       SocialShare.shareTwitter(
-                                              phrasesList[index].phraseTitile,
+                                              idiomList[index].idiom,
                                               trailingText:
-                                                  phrasesList[index].phraseTag,
+                                                '',
                                               url: '')
                                           .then((data) {
                                         print(data);
@@ -178,7 +177,7 @@ class _PhrasesUserCollectionScreenState
                                 InkWell(
                                     onTap: () async {
                                       SocialShare.shareWhatsapp(
-                                              '${phrasesList[index].phraseTitile}  ')
+                                              '${idiomList[index].idiom}  ')
                                           .then((data) {
                                         print(data);
                                       });
@@ -194,7 +193,7 @@ class _PhrasesUserCollectionScreenState
                                 InkWell(
                                     onTap: () async {
                                       SocialShare.shareOptions(
-                                              '${phrasesList[index].phraseTitile} ')
+                                              '${idiomList[index].idiom} ')
                                           .then((data) {
                                         print(data);
                                       });

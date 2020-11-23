@@ -11,10 +11,10 @@ class PhrasesDao extends DatabaseAccessor<AppDatabase> with _$PhrasesDaoMixin {
   final AppDatabase db;
 
   PhrasesDao(this.db) : super(db);
-  Future updateQuote(Phrase phrase) => update(phrases).replace(phrase);
-  Future insertQuote(Phrase phrase) => into(phrases).insert(phrase);
-  Future deleteQuote(Phrase phrase) => delete(phrases).delete(phrase);
-  Future<List<Phrase>> getAllQuotes() {
+  Future updatePhrase(Phrase phrase) => update(phrases).replace(phrase);
+  Future insertPhrase(Phrase phrase) => into(phrases).insert(phrase);
+  Future deletePhrase(Phrase phrase) => delete(phrases).delete(phrase);
+  Future<List<Phrase>> getAllPhrases() {
     return (select(db.phrases).get());
   }
 }

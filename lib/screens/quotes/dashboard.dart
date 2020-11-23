@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:quoteworld/models/dashboard.dart';
 import 'package:quoteworld/screens/drawer.dart';
 
-import '../utils/navigation_style.dart';
-import '../web_scraper_screeen.dart';
-import 'no_internet_screen.dart';
+import '../../utils/navigation_style.dart';
+import 'quotes_scraper.dart';
+import '../../utils/no_internet_screen.dart';
 
 class DashBoard extends StatelessWidget {
   @override

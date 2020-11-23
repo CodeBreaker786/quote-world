@@ -4,12 +4,13 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 import 'package:quoteworld/curd/moor_curd.dart';
-import 'package:quoteworld/screens/phrase_list_screen.dart';
+import 'package:quoteworld/screens/phrase/phrase_list_screen.dart';
 import 'package:quoteworld/utils/constent.dart';
+ 
 import 'package:quoteworld/utils/navigation_style.dart';
 
-import 'drawer.dart';
-import 'no_internet_screen.dart';
+import '../drawer.dart';
+import '../../utils/no_internet_screen.dart';
 
 class PhraseScraper extends StatefulWidget {
   @override
