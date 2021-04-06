@@ -1,7 +1,13 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:quoteworld/screens/bottom_navigation_pade.dart';
+import 'package:quoteworld/utils/admob.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize without device test ids
+  Admob.initialize(testDeviceIds: [AdManager.appId]);
+
   runApp(MyApp());
 }
 

@@ -52,7 +52,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           Container(
               height: 25,
               child: Image.asset(
-                'assets/logo3.png',
+                'assets/logos/splashlogo.png',
                 fit: BoxFit.contain,
                 filterQuality: FilterQuality.high,
               )),
@@ -63,19 +63,32 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 fit: BoxFit.contain,
                 filterQuality: FilterQuality.high,
               )),
-          Icon(Icons.system_update),
-          Text(
-            'i',
-            style: TextStyle(
-              fontSize: 30,
-              fontFamily: 'Myfont',
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'i',
+              style: TextStyle(
+                fontSize: 30,
+                fontFamily: 'Myfont',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'l',
+              style: TextStyle(
+                fontSize: 30,
+                fontFamily: 'Myfont',
+              ),
             ),
           ),
           Icon(Icons.system_update),
           // Icon(Icons.phonelink_erase),
           // Icon(Icons.person_pin),
         ],
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.amber,
         buttonBackgroundColor: Colors.white,
         color: Colors.white60,
         index: pageIndex,
@@ -87,7 +100,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
       body: PageView(
         children: <Widget>[
           DashBoard(),
-
           PhraseScraper(),
           IdiomsScraper(),
           LastWordsScraper(),

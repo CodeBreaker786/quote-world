@@ -12,6 +12,12 @@
     	<string>whatsapp</string>
         <string>tg</string>
     	</array>
+	<key>io.flutter.embedded_views_preview</key>
+    <true/>
+	<key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-9286149177492195~1877955584</string>	
+	<key>NSUserTrackingUsageDescription</key>
+    <string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

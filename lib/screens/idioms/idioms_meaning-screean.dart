@@ -5,14 +5,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
+import 'package:quoteworld/curd/idioms_curd/idioms_curd.dart';
+import 'package:quoteworld/curd/moor_curd.dart';
 import 'package:quoteworld/models/idioms_detail.dart';
-import 'package:quoteworld/utils/logingindicator,.dart';
+import 'package:quoteworld/utils/logingindicator.dart';
 import 'package:quoteworld/utils/snak_bar.dart';
+import 'package:quoteworld/widgets/appbar_tiltle.dart';
+import 'package:quoteworld/widgets/linear_gragient.dart';
+import 'package:quoteworld/widgets/social_share.dart';
 import 'package:social_share/social_share.dart';
 
 class IdiomsMeaningScraper extends StatefulWidget {
   String url;
-  IdiomsMeaningScraper({this.url});
+  IdiomsDao idiomsDao;
+  var db;
+
+  IdiomsMeaningScraper({this.url}) {
+    db = AppDatabase();
+    idiomsDao = IdiomsDao(db);
+  }
   @override
   _IdiomsMeaningScraperState createState() => _IdiomsMeaningScraperState();
 }
@@ -47,12 +58,9 @@ class _IdiomsMeaningScraperState extends State<IdiomsMeaningScraper> {
     return Scaffold(
         backgroundColor: Colors.white70.withOpacity(0.9),
         appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: Text(
-            'Idom Deatail',
-            style: TextStyle(
-              fontSize: 18,
-            ),
+          backgroundColor: Colors.amber,
+          title: AppBarTitle(
+            title: 'Idiom Orgin',
           ),
         ),
         body: FutureBuilder(
@@ -75,9 +83,8 @@ class _IdiomsMeaningScraperState extends State<IdiomsMeaningScraper> {
                               constraints: BoxConstraints(minHeight: 100),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey.withOpacity(0.4),
-                              ),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  gradient: myGradient()),
                               //
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
@@ -87,300 +94,175 @@ class _IdiomsMeaningScraperState extends State<IdiomsMeaningScraper> {
                                   overflow: TextOverflow.fade,
                                   style: TextStyle(
                                     fontSize: 30,
+                                    color: Colors.white,
                                     fontFamily: 'Myfont',
                                   ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Scrollbar(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 8),
-                                        child: Text(
-                                          'Meaning',
-                                          textAlign: TextAlign.justify,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        constraints:
-                                            BoxConstraints(minHeight: 100),
-                                        decoration: BoxDecoration(
-                                            // borderRadius:
-                                            //     BorderRadius.circular(5.0),
-
-                                            ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Colors.amber.shade100,
+                                child: Scrollbar(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 8),
                                           child: Text(
-                                            idioms.meaning,
+                                            'Meaning',
                                             textAlign: TextAlign.justify,
                                             overflow: TextOverflow.fade,
                                             style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                                color: Colors.amber),
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          constraints:
+                                              BoxConstraints(minHeight: 100),
+                                          decoration: BoxDecoration(
+                                              // borderRadius:
+                                              //     BorderRadius.circular(5.0),
+
+                                              ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              idioms.meaning,
+                                              textAlign: TextAlign.justify,
+                                              overflow: TextOverflow.fade,
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 8),
-                                        child: Text(
-                                          'Examples',
-                                          textAlign: TextAlign.justify,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        constraints: BoxConstraints(
-                                            minHeight: 100,
-                                            minWidth: double.infinity),
-                                        decoration: BoxDecoration(
-                                            // borderRadius:
-                                            //     BorderRadius.circular(5.0),
-
-                                            ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 8),
                                           child: Text(
-                                            idioms.examples,
-                                            textAlign: TextAlign.center,
-                                            overflow: TextOverflow.fade,
-                                            style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 8),
-                                        child: Text(
-                                          'Where did it originate?',
-                                          textAlign: TextAlign.justify,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        constraints: BoxConstraints(
-                                            minHeight: 100,
-                                            minWidth: double.infinity),
-                                        decoration: BoxDecoration(
-                                            // borderRadius:
-                                            //     BorderRadius.circular(5.0),
-
-                                            ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            idioms.whereOriginate,
+                                            'Examples',
                                             textAlign: TextAlign.justify,
                                             overflow: TextOverflow.fade,
                                             style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                                color: Colors.amber),
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          constraints: BoxConstraints(
+                                              minHeight: 100,
+                                              minWidth: double.infinity),
+                                          decoration: BoxDecoration(
+                                              // borderRadius:
+                                              //     BorderRadius.circular(5.0),
+
+                                              ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              idioms.examples,
+                                              textAlign: TextAlign.center,
+                                              overflow: TextOverflow.fade,
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 8),
-                                        child: Text(
-                                          'Where is it used?',
-                                          textAlign: TextAlign.justify,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        constraints: BoxConstraints(
-                                            minHeight: 100,
-                                            minWidth: double.infinity),
-                                        decoration: BoxDecoration(
-                                            // borderRadius:
-                                            //     BorderRadius.circular(5.0),
-
-                                            ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 8),
                                           child: Text(
-                                            idioms.whereUsed,
+                                            'Where did it originate?',
+                                            textAlign: TextAlign.justify,
                                             overflow: TextOverflow.fade,
                                             style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'Myfont',
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                                color: Colors.amber),
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          constraints: BoxConstraints(
+                                              minHeight: 100,
+                                              minWidth: double.infinity),
+                                          decoration: BoxDecoration(
+                                              // borderRadius:
+                                              //     BorderRadius.circular(5.0),
+
+                                              ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              idioms.whereOriginate,
+                                              textAlign: TextAlign.justify,
+                                              overflow: TextOverflow.fade,
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 8),
+                                          child: Text(
+                                            'Where is it used?',
+                                            textAlign: TextAlign.justify,
+                                            overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                                color: Colors.amber),
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          constraints: BoxConstraints(
+                                              minHeight: 100,
+                                              minWidth: double.infinity),
+                                          decoration: BoxDecoration(
+                                              // borderRadius:
+                                              //     BorderRadius.circular(5.0),
+
+                                              ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              idioms.whereUsed,
+                                              overflow: TextOverflow.fade,
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                fontFamily: 'Myfont',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.4),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Wrap(
-                                  children: [
-                                    InkWell(
-                                        onTap: () async {
-                                          await flutterTts.speak(
-                                            idioms.meaning,
-                                          );
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Icon(
-                                            Icons.volume_up_outlined,
-                                            color: Colors.green,
-                                          ),
-                                        )),
-                                   
-
-                                    InkWell(
-                                        onTap: () async {
-                                          SocialShare.copyToClipboard(
-                                                  '${idioms.idiom}')
-                                              .then((data) {
-                                            print(data);
-                                          });
-                                          showSnackBar(
-                                            context: context,
-                                            value:
-                                                'Quote is copied in your clipboard',
-                                            icon: Icon(
-                                              FontAwesomeIcons.copy,
-                                              color: Colors.white,
-                                            ),
-                                          );
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Icon(
-                                            FontAwesomeIcons.copy,
-                                            color: Colors.white.withOpacity(.8),
-                                          ),
-                                        )),
-                                    InkWell(
-                                        onTap: () async {
-                                          SocialShare.shareSms(idioms.idiom,
-                                                  trailingText: '', url: '')
-                                              .then((data) {
-                                            print(data);
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Icon(
-                                            Icons.message,
-                                            color: Colors.blueAccent,
-                                          ),
-                                        )),
-                                    InkWell(
-                                        onTap: () async {
-                                          SocialShare.shareTwitter(idioms.idiom,
-                                                  trailingText: '', url: '')
-                                              .then((data) {
-                                            print(data);
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Icon(
-                                            FontAwesomeIcons.twitter,
-                                            color: Colors.blue,
-                                          ),
-                                        )),
-                                    InkWell(
-                                        onTap: () async {
-                                          SocialShare.shareWhatsapp(
-                                                  '${idioms.idiom}')
-                                              .then((data) {
-                                            print(data);
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Icon(
-                                            FontAwesomeIcons.whatsapp,
-                                            color: Colors.green,
-                                          ),
-                                        )),
-
-                                    //         InkWell(
-                                    //             onTap: () async {
-                                    //               SocialShare.shareInstagramStory(paths.getApplicationDocumentsDirectory().toString() , "#ffffff",
-                                    // "#000000", "https://deep-link-url");
-                                    //               // SocialShare.shareInstagramStory(
-                                    //               //         '${quotesList[index].quoteContent} \n ${quotesList[index].quoteWriter}')
-                                    //               //     .then((data) {
-                                    //               //   print(data);
-                                    //               // });
-                                    //             },
-                                    //             child: Padding(
-                                    //               padding: const EdgeInsets.symmetric(
-                                    //                   horizontal: 10),
-                                    //               child: Icon(
-                                    //                 FontAwesomeIcons.instagram,
-
-                                    //                 color:Colors.red.withOpacity(0.5),
-
-                                    //               ),
-                                    //             )),
-                                    InkWell(
-                                        onTap: () async {
-                                          SocialShare.shareOptions(
-                                                  '${idioms.idiom}')
-                                              .then((data) {
-                                            print(data);
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Icon(Icons.share),
-                                        )),
-                                  ],
-                                ),
-                              ),
-                            )
+                            SocialShareRow(
+                              showSaveButton: false,
+                              showbacground: true,
+                              content: '${idioms.idiom}',
+                              type: 'Idiom',
+                            ),
                           ],
                         ),
                       )),

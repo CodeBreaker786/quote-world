@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quoteworld/screens/idioms/idioms.dart';
 import 'package:quoteworld/screens/idioms/show_user_idioms_collections.dart';
+import 'package:quoteworld/screens/last_words/user_last_words_collections.dart';
 import 'package:quoteworld/screens/phrase/show_user_phrase_colllection.dart';
 import 'package:quoteworld/screens/quotes/show_user_quotes_collection.dart';
+import 'package:quoteworld/widgets/appbar_tiltle.dart';
 
 import 'drawer.dart';
 
@@ -12,10 +14,11 @@ class TabBarForCollection extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        drawer: MyDrawer(),
         appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: Text('Your Collection'),
+          backgroundColor: Colors.amber,
+          title: AppBarTitle(
+            title: 'Your Collection',
+          ),
           bottom: TabBar(
             tabs: [
               Tab(
@@ -27,13 +30,15 @@ class TabBarForCollection extends StatelessWidget {
                         filterQuality: FilterQuality.high,
                       )),
                   text: "Quotes"),
-              Tab(icon: Container(
+              Tab(
+                  icon: Container(
                       height: 25,
                       child: Image.asset(
                         'assets/phrase.png',
                         fit: BoxFit.contain,
                         filterQuality: FilterQuality.high,
-                      )), text: "Phrases"),
+                      )),
+                  text: "Phrases"),
               Tab(icon: Icon(Icons.icecream), text: "Idioms"),
               Tab(icon: Icon(Icons.icecream), text: "Idioms")
             ],
@@ -44,7 +49,7 @@ class TabBarForCollection extends StatelessWidget {
             QuotesUserCollectionScreen(),
             PhrasesUserCollectionScreen(),
             IdiomsUserCollections(),
-            IdiomsScraper()
+            LastWordsUserCollectionScreen()
           ],
         ),
       ),

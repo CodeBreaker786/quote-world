@@ -6,8 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:quoteworld/curd/moor_curd.dart';
 import 'package:quoteworld/screens/phrase/phrase_list_screen.dart';
 import 'package:quoteworld/utils/constent.dart';
- 
+import 'package:quoteworld/utils/logingindicator.dart';
+
 import 'package:quoteworld/utils/navigation_style.dart';
+import 'package:quoteworld/widgets/appbar_tiltle.dart';
 
 import '../drawer.dart';
 import '../../utils/no_internet_screen.dart';
@@ -47,17 +49,12 @@ class _PhraseScraperState extends State<PhraseScraper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
       backgroundColor: Colors.white70.withOpacity(0.9),
       appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: Text(
-          'Phrases',
-          style: TextStyle(
-            fontSize: 18,
-          ),
-        ),
-      ),
+          backgroundColor: Colors.amber,
+          title: AppBarTitle(
+            title: 'Phrases',
+          )),
       body: FutureBuilder(
           future: getPhrase(),
           builder: (context, snashot) {
@@ -94,12 +91,18 @@ class _PhraseScraperState extends State<PhraseScraper> {
                                   vertical: 7,
                                 ),
                                 child: Card(
-                                  color: Colors.grey,
+                                  color: Colors.amber.shade100,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color: Colors.white54,
+                                        gradient: LinearGradient(
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Colors.red,
+                                              Colors.orange
+                                            ]),
                                         borderRadius:
                                             BorderRadius.circular(30)),
                                     child: Container(
@@ -108,11 +111,11 @@ class _PhraseScraperState extends State<PhraseScraper> {
                                           child: Text(
                                         e.phraseTitile,
                                         style: TextStyle(
-                                            color: Colors.black45,
-                                            fontSize: 18,
+                                            color: Colors.white,
+                                            fontSize: 20,
                                             fontFamily: 'primaryfont',
                                             fontStyle: FontStyle.italic,
-                                            fontWeight: FontWeight.w600),
+                                            fontWeight: FontWeight.bold),
                                       )),
                                     ),
                                   ),
@@ -124,11 +127,7 @@ class _PhraseScraperState extends State<PhraseScraper> {
                 ),
               );
             }
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.grey,
-              ),
-            );
+            return Center(child: LodingIndicator());
           }),
     );
   }

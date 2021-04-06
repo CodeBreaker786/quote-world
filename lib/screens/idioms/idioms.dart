@@ -6,9 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:quoteworld/curd/idioms_curd/idioms_curd.dart';
 import 'package:quoteworld/curd/lastWord_curd/lastword_curd.dart';
 import 'package:quoteworld/curd/moor_curd.dart';
-import 'package:quoteworld/utils/logingindicator,.dart';
+import 'package:quoteworld/utils/logingindicator.dart';
 import 'package:quoteworld/utils/navigation_style.dart';
 import 'package:quoteworld/utils/snak_bar.dart';
+import 'package:quoteworld/widgets/appbar_tiltle.dart';
+import 'package:quoteworld/widgets/social_share.dart';
 import 'package:social_share/social_share.dart';
 
 import '../drawer.dart';
@@ -58,15 +60,11 @@ class _IdiomsScraperState extends State<IdiomsScraper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: MyDrawer(),
         backgroundColor: Colors.white70.withOpacity(0.9),
         appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: Text(
-            'Idioms',
-            style: TextStyle(
-              fontSize: 18,
-            ),
+          backgroundColor: Colors.amber,
+          title: AppBarTitle(
+            title: 'Idioms',
           ),
         ),
         body: FutureBuilder(
@@ -90,12 +88,15 @@ class _IdiomsScraperState extends State<IdiomsScraper> {
                                 vertical: 7,
                               ),
                               child: Card(
-                                color: Colors.grey,
+                                color: Colors.amber.shade100,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.white54,
+                                      gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [Colors.red, Colors.orange]),
                                       borderRadius: BorderRadius.circular(30)),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -104,140 +105,41 @@ class _IdiomsScraperState extends State<IdiomsScraper> {
                                         title: Text(
                                           idioms[index].idiom,
                                           style: TextStyle(
+                                              color: Colors.white,
                                               fontFamily: 'myfont',
                                               fontSize: 24),
                                         ),
-                                        subtitle:
-                                            Text('Click for idiom meaning'),
-                                        trailing: Icon(Icons.arrow_forward_ios),
+                                        subtitle: Text(
+                                          'Click for idiom meaning',
+                                          style:
+                                              TextStyle(color: Colors.white60),
+                                        ),
+                                        trailing: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            InkWell(
-                                                onTap: () async {
-                                                  await widget.idiomsDao
-                                                      .insertIdiom(
-                                                      idioms[index]);
-                                                  showSnackBar(
-                                                    context: context,
-                                                    value:
-                                                    'Idiom is Saved in your Collection',
-                                                    icon: Icon(
-                                                      Icons.system_update,
-                                                      color: Colors.green,
-                                                    ),
-                                                  );
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Icon(
-                                                    Icons.system_update,
-                                                    color: Colors.green,
-                                                  ),
-                                                )),
-                                            InkWell(
-                                                onTap: () async {
-                                                  SocialShare.copyToClipboard(
-                                                          idioms[index].idiom)
-                                                      .then((data) {
-                                                    print(data);
-                                                  });
-                                                  showSnackBar(
-                                                    context: context,
-                                                    value:
-                                                        'Quote is copied in your clipboard',
-                                                    icon: Icon(
-                                                      FontAwesomeIcons.copy,
-                                                    ),
-                                                  );
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Icon(
-                                                    FontAwesomeIcons.copy,
-                                                    //color: Colors.white,
-                                                  ),
-                                                )),
-                                            InkWell(
-                                                onTap: () async {
-                                                  SocialShare.shareSms(
-                                                          idioms[index].idiom,
-                                                          trailingText: '',
-                                                          url: '')
-                                                      .then((data) {
-                                                    print(data);
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Icon(
-                                                    Icons.message,
-                                                    color: Colors.blueAccent,
-                                                  ),
-                                                )),
-                                            InkWell(
-                                                onTap: () async {
-                                                  SocialShare.shareTwitter(
-                                                          idioms[index].idiom,
-                                                          trailingText: '',
-                                                          url: '')
-                                                      .then((data) {
-                                                    print(data);
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Icon(
-                                                    FontAwesomeIcons.twitter,
-                                                    color: Colors.blue,
-                                                  ),
-                                                )),
-                                            InkWell(
-                                                onTap: () async {
-                                                  SocialShare.shareWhatsapp(
-                                                    idioms[index].idiom,
-                                                  ).then((data) {
-                                                    print(data);
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Icon(
-                                                    FontAwesomeIcons.whatsapp,
-                                                    color: Colors.green,
-                                                  ),
-                                                )),
-                                            InkWell(
-                                                onTap: () async {
-                                                  SocialShare.shareOptions(
-                                                          idioms[index].idiom)
-                                                      .then((data) {
-                                                    print(data);
-                                                  });
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Icon(Icons.share),
-                                                )),
-                                          ],
+                                        child: SocialShareRow(
+                                          showbacground: false,
+                                          content: '${idioms[index].idiom}',
+                                          type: 'Idiom',
+                                          ontap: () async {
+                                            await widget.idiomsDao
+                                                .insertIdiom(idioms[index]);
+                                            showSnackBar(
+                                              context: context,
+                                              value:
+                                                  'Idiom is Saved in your Collection',
+                                              icon: Icon(
+                                                Icons.system_update,
+                                                color: Colors.greenAccent,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),

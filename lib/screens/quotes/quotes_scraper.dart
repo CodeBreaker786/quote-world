@@ -1,19 +1,23 @@
 import 'dart:async';
 
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
+import 'package:quoteworld/utils/admob.dart';
+import 'package:quoteworld/utils/logingindicator.dart';
 import 'package:quoteworld/utils/no_internet_screen.dart';
 import 'package:quoteworld/utils/snak_bar.dart';
+import 'package:quoteworld/widgets/appbar_tiltle.dart';
+import 'package:quoteworld/widgets/social_share.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:social_share/social_share.dart';
+
 import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 import '../../curd/moor_curd.dart';
 import '../../curd/quotes_curd/quotes_curd.dart';
@@ -43,14 +47,11 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
   int pageNo = 0;
   Key key;
   ConnectivityResult connectivityResult;
-
-  bool _isLoading = true;
   bool _hasMore = true;
   @override
   void initState() {
     super.initState();
 
-    _isLoading = true;
     _hasMore = true;
   }
 
@@ -98,8 +99,8 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
           print(data.data);
           connectivityResult = data.data;
           return Scaffold(
-              backgroundColor: Colors.white70,
               bottomNavigationBar: Container(
+                margin: EdgeInsets.only(bottom: 20),
                 height: 60,
                 width: double.infinity,
                 child: Row(
@@ -108,12 +109,13 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                     StepperSwipe(
                       key: key,
                       initialValue: 1,
-                      iconsColor: Colors.grey.withOpacity(.8),
+                      withBackground: false,
+                      iconsColor: Colors.amber,
                       speedTransitionLimitCount: 1,
                       firstIncrementDuration: Duration(milliseconds: 300),
                       secondIncrementDuration: Duration(milliseconds: 300),
                       direction: Axis.horizontal,
-                      dragButtonColor: Colors.grey.withOpacity(.8),
+                      dragButtonColor: Colors.amber,
                       withSpring: true,
                       maxValue: 100,
                       withNaturalNumbers: true,
@@ -131,8 +133,10 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
               ),
               // floatingActionButton: RadialMenu(),
               appBar: AppBar(
-                backgroundColor: Colors.grey,
-                title: Text(widget.title),
+                backgroundColor: Colors.amber,
+                title: AppBarTitle(
+                  title: widget.title,
+                ),
                 actions: <Widget>[
                   Padding(
                       padding: const EdgeInsets.only(right: 18),
@@ -141,7 +145,7 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                               Icons.signal_wifi_off,
                               color: Colors.red,
                             )
-                          : Icon(Icons.wifi, color: Colors.greenAccent))
+                          : Icon(Icons.wifi, color: Colors.green))
                 ],
               ),
               body: Container(
@@ -174,9 +178,16 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                Colors.red,
+                                                Colors.orange
+                                              ]),
                                           borderRadius:
                                               BorderRadius.circular(5.0),
-                                          color: Colors.grey.withOpacity(0.4),
+                                          //color: Colors.grey.withOpacity(0.4),
                                         ),
                                         //
                                         child: Row(
@@ -184,12 +195,12 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                               MainAxisAlignment.start,
                                           children: [
                                             Container(
-                                              margin:
-                                                  EdgeInsets.only(bottom: 1),
+                                              margin: EdgeInsets.only(
+                                                  bottom: 0, top: 0),
                                               width: 100,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: BoxDecoration(
-                                                  color: Colors.grey,
+                                                  // color: Colors.grey,
                                                   borderRadius:
                                                       BorderRadius.only(
                                                           bottomRight:
@@ -204,7 +215,9 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                                       fit: BoxFit.fill,
                                                     )
                                                   : Image.asset(
-                                                      'assets/person.jpg'),
+                                                      'assets/person.jpg',
+                                                      fit: BoxFit.fill,
+                                                    ),
                                             ),
                                             Expanded(
                                               child: Container(
@@ -212,6 +225,7 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                                   quotesList[index].quoteWriter,
                                                   overflow: TextOverflow.fade,
                                                   style: TextStyle(
+                                                    color: Colors.white,
                                                     fontSize: 30,
                                                     fontFamily: 'Myfont',
                                                   ),
@@ -222,203 +236,71 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Scrollbar(
-                                          child: SingleChildScrollView(
-                                            dragStartBehavior:
-                                                DragStartBehavior.down,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
-                                              child: Text(
-                                                quotesList[index].quoteContent,
-                                                style: TextStyle(
-                                                    fontSize: 30,
-                                                    fontFamily: 'Myfont'),
+                                        child: Container(
+                                          color: Colors.amber.shade100,
+                                          child: Scrollbar(
+                                            child: SingleChildScrollView(
+                                              dragStartBehavior:
+                                                  DragStartBehavior.down,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 12),
+                                                    child: Text(
+                                                      quotesList[index]
+                                                          .quoteContent,
+                                                      style: TextStyle(
+                                                          fontSize: 30,
+                                                          fontFamily: 'Myfont'),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 30, bottom: 20.0),
+                                                    child: AdmobBanner(
+                                                      adUnitId: AdManager
+                                                          .bannerAdUnitId,
+                                                      adSize: AdmobBannerSize
+                                                          .LARGE_BANNER,
+                                                      listener: (AdmobAdEvent
+                                                              event,
+                                                          Map<String, dynamic>
+                                                              args) {},
+                                                      onBannerCreated:
+                                                          (AdmobBannerController
+                                                              controller) {
+                                                        // Dispose is called automatically for you when Flutter removes the banner from the widget tree.
+                                                        // Normally you don't need to worry about disposing this yourself, it's handled.
+                                                        // If you need direct access to dispose, this is your guy!
+                                                        // controller.dispose();
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          color: Colors.grey.withOpacity(0.4),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Wrap(
-                                            children: [
-                                              InkWell(
-                                                  onTap: () async {
-                                                    await flutterTts.speak(
-                                                      quotesList[index]
-                                                          .quoteContent,
-                                                    );
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(
-                                                      Icons.volume_up_outlined,
-                                                      color: Colors.green,
-                                                    ),
-                                                  )),
-                                              InkWell(
-                                                  onTap: () async {
-                                                    widget.quotesDao
-                                                        .insertQuote(
-                                                            quotesList[index]);
-                                                    showSnackBar(
-                                                      context: context,
-                                                      value:
-                                                          'Quote is Saved in your Collection',
-                                                      icon: Icon(
-                                                        Icons.system_update,
-                                                        color: Colors.green,
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(
-                                                      Icons.system_update,
-                                                      color: Colors.green,
-                                                    ),
-                                                  )),
-
-                                              InkWell(
-                                                  onTap: () async {
-                                                    SocialShare.copyToClipboard(
-                                                            '${quotesList[index].quoteContent} \n ${quotesList[index].quoteWriter}')
-                                                        .then((data) {
-                                                      print(data);
-                                                    });
-                                                    showSnackBar(
-                                                      context: context,
-                                                      value:
-                                                          'Quote is copied in your clipboard',
-                                                      icon: Icon(
-                                                        FontAwesomeIcons.copy,
-                                                        color: Colors.white,
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(
-                                                      FontAwesomeIcons.copy,
-                                                      color: Colors.white
-                                                          .withOpacity(.8),
-                                                    ),
-                                                  )),
-                                              InkWell(
-                                                  onTap: () async {
-                                                    SocialShare.shareSms(
-                                                            quotesList[index]
-                                                                .quoteContent,
-                                                            trailingText:
-                                                                quotesList[
-                                                                        index]
-                                                                    .quoteWriter,
-                                                            url: '')
-                                                        .then((data) {
-                                                      print(data);
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(
-                                                      Icons.message,
-                                                      color: Colors.blueAccent,
-                                                    ),
-                                                  )),
-                                              InkWell(
-                                                  onTap: () async {
-                                                    SocialShare.shareTwitter(
-                                                            quotesList[index]
-                                                                .quoteContent,
-                                                            trailingText:
-                                                                quotesList[
-                                                                        index]
-                                                                    .quoteWriter,
-                                                            url: '')
-                                                        .then((data) {
-                                                      print(data);
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(
-                                                      FontAwesomeIcons.twitter,
-                                                      color: Colors.blue,
-                                                    ),
-                                                  )),
-                                              InkWell(
-                                                  onTap: () async {
-                                                    SocialShare.shareWhatsapp(
-                                                            '${quotesList[index].quoteContent} \n ${quotesList[index].quoteWriter}')
-                                                        .then((data) {
-                                                      print(data);
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(
-                                                      FontAwesomeIcons.whatsapp,
-                                                      color: Colors.green,
-                                                    ),
-                                                  )),
-
-                                              //         InkWell(
-                                              //             onTap: () async {
-                                              //               SocialShare.shareInstagramStory(paths.getApplicationDocumentsDirectory().toString() , "#ffffff",
-                                              // "#000000", "https://deep-link-url");
-                                              //               // SocialShare.shareInstagramStory(
-                                              //               //         '${quotesList[index].quoteContent} \n ${quotesList[index].quoteWriter}')
-                                              //               //     .then((data) {
-                                              //               //   print(data);
-                                              //               // });
-                                              //             },
-                                              //             child: Padding(
-                                              //               padding: const EdgeInsets.symmetric(
-                                              //                   horizontal: 10),
-                                              //               child: Icon(
-                                              //                 FontAwesomeIcons.instagram,
-
-                                              //                 color:Colors.red.withOpacity(0.5),
-
-                                              //               ),
-                                              //             )),
-                                              InkWell(
-                                                  onTap: () async {
-                                                    SocialShare.shareOptions(
-                                                            '${quotesList[index].quoteContent} \n ${quotesList[index].quoteWriter}')
-                                                        .then((data) {
-                                                      print(data);
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: Icon(Icons.share),
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
+                                      SocialShareRow(
+                                        content:
+                                            '${quotesList[index].quoteContent} \n ${quotesList[index].quoteWriter}',
+                                        type: 'Quote',
+                                        ontap: () async {
+                                          widget.quotesDao
+                                              .insertQuote(quotesList[index]);
+                                          showSnackBar(
+                                            context: context,
+                                            value:
+                                                'Quote is Saved in your Collection',
+                                            icon: Icon(
+                                              Icons.system_update,
+                                              color: Colors.greenAccent,
+                                            ),
+                                          );
+                                        },
                                       )
                                     ],
                                   ),
@@ -426,8 +308,7 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                           );
                         })
                     : NoInternetScreen(),
-              )
-              );
+              ));
         });
   }
 
@@ -441,26 +322,20 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Container(
               width: MediaQuery.of(context).size.width - 50,
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                ),
-              ))),
+              child: Center(child: LodingIndicator()))),
     );
   }
 
   void _loadMore({int page}) {
     pageNo = page != null ? page : pageNo + 1;
-    _isLoading = true;
+
     getQuotesData().then((List<Quote> fetchedList) {
       if (fetchedList.isEmpty) {
         setState(() {
-          _isLoading = false;
           _hasMore = false;
         });
       } else {
         setState(() {
-          _isLoading = false;
           quotesList.addAll(fetchedList);
         });
       }
