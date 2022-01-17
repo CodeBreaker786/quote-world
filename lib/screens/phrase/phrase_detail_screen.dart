@@ -27,7 +27,7 @@ class PhraseDetailScreen extends StatelessWidget {
   }
 
   getPhraseDetail() async {
-    var response = await http.get(detailUrl).catchError((error) {
+    var response = await http.get(Uri.parse(detailUrl)).catchError((error) {
       print(error);
     });
 

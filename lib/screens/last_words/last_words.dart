@@ -33,7 +33,7 @@ class _LastWordsScraperState extends State<LastWordsScraper> {
   getLastWords() async {
     final url = 'https://www.phrases.org.uk/famous-last-words/index.html';
     print(url);
-    var response = await http.get(url).catchError((error) {
+    var response = await http.get(Uri.parse(url)).catchError((error) {
       print(error);
     });
 

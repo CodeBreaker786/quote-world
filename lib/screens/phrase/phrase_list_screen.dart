@@ -29,7 +29,7 @@ class PhraseScreen extends StatefulWidget {
 
 class _PhraseScreenState extends State<PhraseScreen> {
   getPhrase() async {
-    var response = await http.get(widget.url).catchError((error) {
+    var response = await http.get(Uri.parse(widget.url)).catchError((error) {
       print(error);
     });
 

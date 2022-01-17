@@ -31,7 +31,7 @@ class IdiomsMeaningScraper extends StatefulWidget {
 class _IdiomsMeaningScraperState extends State<IdiomsMeaningScraper> {
   FlutterTts flutterTts = FlutterTts();
   getIdioms() async {
-    var response = await http.get(widget.url).catchError((error) {
+    var response = await http.get(Uri.parse(widget.url)).catchError((error) {
       print(error);
     });
 

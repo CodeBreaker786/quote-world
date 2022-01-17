@@ -24,7 +24,7 @@ class _PhraseScraperState extends State<PhraseScraper> {
     final url =
         'https://www.phrases.org.uk/meanings/phrases-and-sayings-list.html';
     print(url);
-    var response = await http.get(url).catchError((error) {
+    var response = await http.get(Uri.parse(url)).catchError((error) {
       print(error);
     });
 

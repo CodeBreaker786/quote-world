@@ -22,17 +22,15 @@ class Quote extends DataClass implements Insertable<Quote> {
   factory Quote.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return Quote(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      quoteContent: stringType
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      quoteContent: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}quote_content']),
-      quoteTag: stringType
+      quoteTag: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}quote_tag']),
-      quoteImageUrl: stringType
+      quoteImageUrl: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}quote_image_url']),
-      quoteWriter: stringType
+      quoteWriter: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}quote_writer']),
     );
   }
@@ -131,7 +129,7 @@ class Quote extends DataClass implements Insertable<Quote> {
           $mrjc(quoteTag.hashCode,
               $mrjc(quoteImageUrl.hashCode, quoteWriter.hashCode)))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Quote &&
           other.id == this.id &&
@@ -232,77 +230,47 @@ class $QuotesTable extends Quotes with TableInfo<$QuotesTable, Quote> {
   final String _alias;
   $QuotesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedColumn<int> _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  GeneratedColumn<int> get id =>
+      _id ??= GeneratedColumn<int>('id', aliasedName, false,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _quoteContentMeta =
       const VerificationMeta('quoteContent');
-  GeneratedTextColumn _quoteContent;
+  GeneratedColumn<String> _quoteContent;
   @override
-  GeneratedTextColumn get quoteContent =>
-      _quoteContent ??= _constructQuoteContent();
-  GeneratedTextColumn _constructQuoteContent() {
-    return GeneratedTextColumn(
-      'quote_content',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get quoteContent => _quoteContent ??=
+      GeneratedColumn<String>('quote_content', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _quoteTagMeta = const VerificationMeta('quoteTag');
-  GeneratedTextColumn _quoteTag;
+  GeneratedColumn<String> _quoteTag;
   @override
-  GeneratedTextColumn get quoteTag => _quoteTag ??= _constructQuoteTag();
-  GeneratedTextColumn _constructQuoteTag() {
-    return GeneratedTextColumn(
-      'quote_tag',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get quoteTag =>
+      _quoteTag ??= GeneratedColumn<String>('quote_tag', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _quoteImageUrlMeta =
       const VerificationMeta('quoteImageUrl');
-  GeneratedTextColumn _quoteImageUrl;
+  GeneratedColumn<String> _quoteImageUrl;
   @override
-  GeneratedTextColumn get quoteImageUrl =>
-      _quoteImageUrl ??= _constructQuoteImageUrl();
-  GeneratedTextColumn _constructQuoteImageUrl() {
-    return GeneratedTextColumn(
-      'quote_image_url',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<String> get quoteImageUrl => _quoteImageUrl ??=
+      GeneratedColumn<String>('quote_image_url', aliasedName, false,
+          typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _quoteWriterMeta =
       const VerificationMeta('quoteWriter');
-  GeneratedTextColumn _quoteWriter;
+  GeneratedColumn<String> _quoteWriter;
   @override
-  GeneratedTextColumn get quoteWriter =>
-      _quoteWriter ??= _constructQuoteWriter();
-  GeneratedTextColumn _constructQuoteWriter() {
-    return GeneratedTextColumn(
-      'quote_writer',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<String> get quoteWriter => _quoteWriter ??=
+      GeneratedColumn<String>('quote_writer', aliasedName, false,
+          typeName: 'TEXT', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, quoteContent, quoteTag, quoteImageUrl, quoteWriter];
   @override
-  $QuotesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'quotes';
   @override
-  String get $tableName => _alias ?? 'quotes';
-  @override
-  final String actualTableName = 'quotes';
+  String get actualTableName => 'quotes';
   @override
   VerificationContext validateIntegrity(Insertable<Quote> instance,
       {bool isInserting = false}) {
@@ -344,8 +312,8 @@ class $QuotesTable extends Quotes with TableInfo<$QuotesTable, Quote> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Quote map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Quote.fromData(data, _db, prefix: effectivePrefix);
+    return Quote.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -369,17 +337,15 @@ class Phrase extends DataClass implements Insertable<Phrase> {
   factory Phrase.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return Phrase(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      phraseTitile: stringType
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      phraseTitile: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}phrase_titile']),
-      phraseDetail: stringType
+      phraseDetail: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}phrase_detail']),
-      phraseTag: stringType
+      phraseTag: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}phrase_tag']),
-      phraseLink: stringType
+      phraseLink: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}phrase_link']),
     );
   }
@@ -478,7 +444,7 @@ class Phrase extends DataClass implements Insertable<Phrase> {
           $mrjc(phraseDetail.hashCode,
               $mrjc(phraseTag.hashCode, phraseLink.hashCode)))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Phrase &&
           other.id == this.id &&
@@ -578,75 +544,46 @@ class $PhrasesTable extends Phrases with TableInfo<$PhrasesTable, Phrase> {
   final String _alias;
   $PhrasesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedColumn<int> _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  GeneratedColumn<int> get id =>
+      _id ??= GeneratedColumn<int>('id', aliasedName, false,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _phraseTitileMeta =
       const VerificationMeta('phraseTitile');
-  GeneratedTextColumn _phraseTitile;
+  GeneratedColumn<String> _phraseTitile;
   @override
-  GeneratedTextColumn get phraseTitile =>
-      _phraseTitile ??= _constructPhraseTitile();
-  GeneratedTextColumn _constructPhraseTitile() {
-    return GeneratedTextColumn(
-      'phrase_titile',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get phraseTitile => _phraseTitile ??=
+      GeneratedColumn<String>('phrase_titile', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _phraseDetailMeta =
       const VerificationMeta('phraseDetail');
-  GeneratedTextColumn _phraseDetail;
+  GeneratedColumn<String> _phraseDetail;
   @override
-  GeneratedTextColumn get phraseDetail =>
-      _phraseDetail ??= _constructPhraseDetail();
-  GeneratedTextColumn _constructPhraseDetail() {
-    return GeneratedTextColumn(
-      'phrase_detail',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get phraseDetail => _phraseDetail ??=
+      GeneratedColumn<String>('phrase_detail', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _phraseTagMeta = const VerificationMeta('phraseTag');
-  GeneratedTextColumn _phraseTag;
+  GeneratedColumn<String> _phraseTag;
   @override
-  GeneratedTextColumn get phraseTag => _phraseTag ??= _constructPhraseTag();
-  GeneratedTextColumn _constructPhraseTag() {
-    return GeneratedTextColumn(
-      'phrase_tag',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get phraseTag =>
+      _phraseTag ??= GeneratedColumn<String>('phrase_tag', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _phraseLinkMeta = const VerificationMeta('phraseLink');
-  GeneratedTextColumn _phraseLink;
+  GeneratedColumn<String> _phraseLink;
   @override
-  GeneratedTextColumn get phraseLink => _phraseLink ??= _constructPhraseLink();
-  GeneratedTextColumn _constructPhraseLink() {
-    return GeneratedTextColumn(
-      'phrase_link',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get phraseLink =>
+      _phraseLink ??= GeneratedColumn<String>('phrase_link', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
       [id, phraseTitile, phraseDetail, phraseTag, phraseLink];
   @override
-  $PhrasesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'phrases';
   @override
-  String get $tableName => _alias ?? 'phrases';
-  @override
-  final String actualTableName = 'phrases';
+  String get actualTableName => 'phrases';
   @override
   VerificationContext validateIntegrity(Insertable<Phrase> instance,
       {bool isInserting = false}) {
@@ -684,8 +621,8 @@ class $PhrasesTable extends Phrases with TableInfo<$PhrasesTable, Phrase> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Phrase map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Phrase.fromData(data, _db, prefix: effectivePrefix);
+    return Phrase.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -702,13 +639,11 @@ class Idiom extends DataClass implements Insertable<Idiom> {
   factory Idiom.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return Idiom(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      idiom:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}idiom']),
-      idiomMeaningLink: stringType.mapFromDatabaseResponse(
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      idiom: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}idiom']),
+      idiomMeaningLink: const StringType().mapFromDatabaseResponse(
           data['${effectivePrefix}idiom_meaning_link']),
     );
   }
@@ -776,7 +711,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
   int get hashCode => $mrjf(
       $mrjc(id.hashCode, $mrjc(idiom.hashCode, idiomMeaningLink.hashCode)));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Idiom &&
           other.id == this.id &&
@@ -850,48 +785,32 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   final String _alias;
   $IdiomsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedColumn<int> _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  GeneratedColumn<int> get id =>
+      _id ??= GeneratedColumn<int>('id', aliasedName, false,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _idiomMeta = const VerificationMeta('idiom');
-  GeneratedTextColumn _idiom;
+  GeneratedColumn<String> _idiom;
   @override
-  GeneratedTextColumn get idiom => _idiom ??= _constructIdiom();
-  GeneratedTextColumn _constructIdiom() {
-    return GeneratedTextColumn(
-      'idiom',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get idiom =>
+      _idiom ??= GeneratedColumn<String>('idiom', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _idiomMeaningLinkMeta =
       const VerificationMeta('idiomMeaningLink');
-  GeneratedTextColumn _idiomMeaningLink;
+  GeneratedColumn<String> _idiomMeaningLink;
   @override
-  GeneratedTextColumn get idiomMeaningLink =>
-      _idiomMeaningLink ??= _constructIdiomMeaningLink();
-  GeneratedTextColumn _constructIdiomMeaningLink() {
-    return GeneratedTextColumn(
-      'idiom_meaning_link',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get idiomMeaningLink => _idiomMeaningLink ??=
+      GeneratedColumn<String>('idiom_meaning_link', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [id, idiom, idiomMeaningLink];
   @override
-  $IdiomsTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'idioms';
   @override
-  String get $tableName => _alias ?? 'idioms';
-  @override
-  final String actualTableName = 'idioms';
+  String get actualTableName => 'idioms';
   @override
   VerificationContext validateIntegrity(Insertable<Idiom> instance,
       {bool isInserting = false}) {
@@ -917,8 +836,8 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Idiom map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Idiom.fromData(data, _db, prefix: effectivePrefix);
+    return Idiom.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -944,18 +863,17 @@ class LastWord extends DataClass implements Insertable<LastWord> {
   factory LastWord.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return LastWord(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      lastWords: stringType
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      lastWords: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}last_words']),
-      imageLink: stringType
+      imageLink: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}image_link']),
-      lastWordsReceiver: stringType.mapFromDatabaseResponse(
+      lastWordsReceiver: const StringType().mapFromDatabaseResponse(
           data['${effectivePrefix}last_words_receiver']),
-      deathAndBirthDates: stringType.mapFromDatabaseResponse(
+      deathAndBirthDates: const StringType().mapFromDatabaseResponse(
           data['${effectivePrefix}death_and_birth_dates']),
     );
   }
@@ -1068,7 +986,7 @@ class LastWord extends DataClass implements Insertable<LastWord> {
                   $mrjc(lastWordsReceiver.hashCode,
                       deathAndBirthDates.hashCode))))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is LastWord &&
           other.id == this.id &&
@@ -1182,87 +1100,52 @@ class $LastWordsTable extends LastWords
   final String _alias;
   $LastWordsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedColumn<int> _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  GeneratedColumn<int> get id =>
+      _id ??= GeneratedColumn<int>('id', aliasedName, false,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _nameMeta = const VerificationMeta('name');
-  GeneratedTextColumn _name;
+  GeneratedColumn<String> _name;
   @override
-  GeneratedTextColumn get name => _name ??= _constructName();
-  GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn(
-      'name',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get name =>
+      _name ??= GeneratedColumn<String>('name', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _lastWordsMeta = const VerificationMeta('lastWords');
-  GeneratedTextColumn _lastWords;
+  GeneratedColumn<String> _lastWords;
   @override
-  GeneratedTextColumn get lastWords => _lastWords ??= _constructLastWords();
-  GeneratedTextColumn _constructLastWords() {
-    return GeneratedTextColumn(
-      'last_words',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get lastWords =>
+      _lastWords ??= GeneratedColumn<String>('last_words', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _imageLinkMeta = const VerificationMeta('imageLink');
-  GeneratedTextColumn _imageLink;
+  GeneratedColumn<String> _imageLink;
   @override
-  GeneratedTextColumn get imageLink => _imageLink ??= _constructImageLink();
-  GeneratedTextColumn _constructImageLink() {
-    return GeneratedTextColumn(
-      'image_link',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get imageLink =>
+      _imageLink ??= GeneratedColumn<String>('image_link', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _lastWordsReceiverMeta =
       const VerificationMeta('lastWordsReceiver');
-  GeneratedTextColumn _lastWordsReceiver;
+  GeneratedColumn<String> _lastWordsReceiver;
   @override
-  GeneratedTextColumn get lastWordsReceiver =>
-      _lastWordsReceiver ??= _constructLastWordsReceiver();
-  GeneratedTextColumn _constructLastWordsReceiver() {
-    return GeneratedTextColumn(
-      'last_words_receiver',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get lastWordsReceiver => _lastWordsReceiver ??=
+      GeneratedColumn<String>('last_words_receiver', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _deathAndBirthDatesMeta =
       const VerificationMeta('deathAndBirthDates');
-  GeneratedTextColumn _deathAndBirthDates;
+  GeneratedColumn<String> _deathAndBirthDates;
   @override
-  GeneratedTextColumn get deathAndBirthDates =>
-      _deathAndBirthDates ??= _constructDeathAndBirthDates();
-  GeneratedTextColumn _constructDeathAndBirthDates() {
-    return GeneratedTextColumn(
-      'death_and_birth_dates',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get deathAndBirthDates => _deathAndBirthDates ??=
+      GeneratedColumn<String>('death_and_birth_dates', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
       [id, name, lastWords, imageLink, lastWordsReceiver, deathAndBirthDates];
   @override
-  $LastWordsTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'last_words';
   @override
-  String get $tableName => _alias ?? 'last_words';
-  @override
-  final String actualTableName = 'last_words';
+  String get actualTableName => 'last_words';
   @override
   VerificationContext validateIntegrity(Insertable<LastWord> instance,
       {bool isInserting = false}) {
@@ -1302,8 +1185,8 @@ class $LastWordsTable extends LastWords
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   LastWord map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return LastWord.fromData(data, _db, prefix: effectivePrefix);
+    return LastWord.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override

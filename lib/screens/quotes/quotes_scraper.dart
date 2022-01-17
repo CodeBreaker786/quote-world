@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admob_flutter/admob_flutter.dart';
+ 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -58,7 +58,7 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
   Future<List<Quote>> getQuotesData() async {
     final url = widget.url + pageNo.toString();
     print(url);
-    var response = await http.get(url).catchError((error) {
+    var response = await http.get(Uri.parse(url)).catchError((error) {
       print(error);
     });
 
@@ -256,28 +256,28 @@ class _WebScraperScreenState extends State<WebScraperScreen> {
                                                           fontFamily: 'Myfont'),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 30, bottom: 20.0),
-                                                    child: AdmobBanner(
-                                                      adUnitId: AdManager
-                                                          .bannerAdUnitId,
-                                                      adSize: AdmobBannerSize
-                                                          .LARGE_BANNER,
-                                                      listener: (AdmobAdEvent
-                                                              event,
-                                                          Map<String, dynamic>
-                                                              args) {},
-                                                      onBannerCreated:
-                                                          (AdmobBannerController
-                                                              controller) {
-                                                        // Dispose is called automatically for you when Flutter removes the banner from the widget tree.
-                                                        // Normally you don't need to worry about disposing this yourself, it's handled.
-                                                        // If you need direct access to dispose, this is your guy!
-                                                        // controller.dispose();
-                                                      },
-                                                    ),
-                                                  ),
+                                                  // Container(
+                                                  //   margin: EdgeInsets.only(
+                                                  //       top: 30, bottom: 20.0),
+                                                  //   child: AdmobBanner(
+                                                  //     adUnitId: AdManager
+                                                  //         .bannerAdUnitId,
+                                                  //     adSize: AdmobBannerSize
+                                                  //         .LARGE_BANNER,
+                                                  //     listener: (AdmobAdEvent
+                                                  //             event,
+                                                  //         Map<String, dynamic>
+                                                  //             args) {},
+                                                  //     onBannerCreated:
+                                                  //         (AdmobBannerController
+                                                  //             controller) {
+                                                  //       // Dispose is called automatically for you when Flutter removes the banner from the widget tree.
+                                                  //       // Normally you don't need to worry about disposing this yourself, it's handled.
+                                                  //       // If you need direct access to dispose, this is your guy!
+                                                  //       // controller.dispose();
+                                                  //     },
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                             ),
