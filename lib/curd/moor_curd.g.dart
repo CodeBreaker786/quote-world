@@ -6,7 +6,7 @@ part of 'moor_curd.dart';
 // MoorGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+// ignore_for_file: type=lint
 class Quote extends DataClass implements Insertable<Quote> {
   final int id;
   final String quoteContent;
@@ -122,12 +122,8 @@ class Quote extends DataClass implements Insertable<Quote> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          quoteContent.hashCode,
-          $mrjc(quoteTag.hashCode,
-              $mrjc(quoteImageUrl.hashCode, quoteWriter.hashCode)))));
+  int get hashCode =>
+      Object.hash(id, quoteContent, quoteTag, quoteImageUrl, quoteWriter);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -226,15 +222,16 @@ class QuotesCompanion extends UpdateCompanion<Quote> {
 }
 
 class $QuotesTable extends Quotes with TableInfo<$QuotesTable, Quote> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String _alias;
-  $QuotesTable(this._db, [this._alias]);
+  $QuotesTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedColumn<int> _id;
   @override
   GeneratedColumn<int> get id =>
       _id ??= GeneratedColumn<int>('id', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const IntType(),
           requiredDuringInsert: false,
           defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _quoteContentMeta =
@@ -243,27 +240,27 @@ class $QuotesTable extends Quotes with TableInfo<$QuotesTable, Quote> {
   @override
   GeneratedColumn<String> get quoteContent => _quoteContent ??=
       GeneratedColumn<String>('quote_content', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _quoteTagMeta = const VerificationMeta('quoteTag');
   GeneratedColumn<String> _quoteTag;
   @override
   GeneratedColumn<String> get quoteTag =>
       _quoteTag ??= GeneratedColumn<String>('quote_tag', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _quoteImageUrlMeta =
       const VerificationMeta('quoteImageUrl');
   GeneratedColumn<String> _quoteImageUrl;
   @override
   GeneratedColumn<String> get quoteImageUrl => _quoteImageUrl ??=
       GeneratedColumn<String>('quote_image_url', aliasedName, false,
-          typeName: 'TEXT', requiredDuringInsert: true);
+          type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _quoteWriterMeta =
       const VerificationMeta('quoteWriter');
   GeneratedColumn<String> _quoteWriter;
   @override
   GeneratedColumn<String> get quoteWriter => _quoteWriter ??=
       GeneratedColumn<String>('quote_writer', aliasedName, false,
-          typeName: 'TEXT', requiredDuringInsert: true);
+          type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, quoteContent, quoteTag, quoteImageUrl, quoteWriter];
@@ -312,13 +309,13 @@ class $QuotesTable extends Quotes with TableInfo<$QuotesTable, Quote> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Quote map(Map<String, dynamic> data, {String tablePrefix}) {
-    return Quote.fromData(data, _db,
+    return Quote.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $QuotesTable createAlias(String alias) {
-    return $QuotesTable(_db, alias);
+    return $QuotesTable(attachedDatabase, alias);
   }
 }
 
@@ -437,12 +434,8 @@ class Phrase extends DataClass implements Insertable<Phrase> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          phraseTitile.hashCode,
-          $mrjc(phraseDetail.hashCode,
-              $mrjc(phraseTag.hashCode, phraseLink.hashCode)))));
+  int get hashCode =>
+      Object.hash(id, phraseTitile, phraseDetail, phraseTag, phraseLink);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -540,15 +533,16 @@ class PhrasesCompanion extends UpdateCompanion<Phrase> {
 }
 
 class $PhrasesTable extends Phrases with TableInfo<$PhrasesTable, Phrase> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String _alias;
-  $PhrasesTable(this._db, [this._alias]);
+  $PhrasesTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedColumn<int> _id;
   @override
   GeneratedColumn<int> get id =>
       _id ??= GeneratedColumn<int>('id', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const IntType(),
           requiredDuringInsert: false,
           defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _phraseTitileMeta =
@@ -557,26 +551,26 @@ class $PhrasesTable extends Phrases with TableInfo<$PhrasesTable, Phrase> {
   @override
   GeneratedColumn<String> get phraseTitile => _phraseTitile ??=
       GeneratedColumn<String>('phrase_titile', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _phraseDetailMeta =
       const VerificationMeta('phraseDetail');
   GeneratedColumn<String> _phraseDetail;
   @override
   GeneratedColumn<String> get phraseDetail => _phraseDetail ??=
       GeneratedColumn<String>('phrase_detail', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _phraseTagMeta = const VerificationMeta('phraseTag');
   GeneratedColumn<String> _phraseTag;
   @override
   GeneratedColumn<String> get phraseTag =>
       _phraseTag ??= GeneratedColumn<String>('phrase_tag', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _phraseLinkMeta = const VerificationMeta('phraseLink');
   GeneratedColumn<String> _phraseLink;
   @override
   GeneratedColumn<String> get phraseLink =>
       _phraseLink ??= GeneratedColumn<String>('phrase_link', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
       [id, phraseTitile, phraseDetail, phraseTag, phraseLink];
@@ -621,13 +615,13 @@ class $PhrasesTable extends Phrases with TableInfo<$PhrasesTable, Phrase> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Phrase map(Map<String, dynamic> data, {String tablePrefix}) {
-    return Phrase.fromData(data, _db,
+    return Phrase.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $PhrasesTable createAlias(String alias) {
-    return $PhrasesTable(_db, alias);
+    return $PhrasesTable(attachedDatabase, alias);
   }
 }
 
@@ -708,8 +702,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
   }
 
   @override
-  int get hashCode => $mrjf(
-      $mrjc(id.hashCode, $mrjc(idiom.hashCode, idiomMeaningLink.hashCode)));
+  int get hashCode => Object.hash(id, idiom, idiomMeaningLink);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -781,15 +774,16 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
 }
 
 class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String _alias;
-  $IdiomsTable(this._db, [this._alias]);
+  $IdiomsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedColumn<int> _id;
   @override
   GeneratedColumn<int> get id =>
       _id ??= GeneratedColumn<int>('id', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const IntType(),
           requiredDuringInsert: false,
           defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _idiomMeta = const VerificationMeta('idiom');
@@ -797,14 +791,14 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   @override
   GeneratedColumn<String> get idiom =>
       _idiom ??= GeneratedColumn<String>('idiom', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _idiomMeaningLinkMeta =
       const VerificationMeta('idiomMeaningLink');
   GeneratedColumn<String> _idiomMeaningLink;
   @override
   GeneratedColumn<String> get idiomMeaningLink => _idiomMeaningLink ??=
       GeneratedColumn<String>('idiom_meaning_link', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [id, idiom, idiomMeaningLink];
   @override
@@ -836,13 +830,13 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Idiom map(Map<String, dynamic> data, {String tablePrefix}) {
-    return Idiom.fromData(data, _db,
+    return Idiom.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $IdiomsTable createAlias(String alias) {
-    return $IdiomsTable(_db, alias);
+    return $IdiomsTable(attachedDatabase, alias);
   }
 }
 
@@ -975,16 +969,8 @@ class LastWord extends DataClass implements Insertable<LastWord> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          name.hashCode,
-          $mrjc(
-              lastWords.hashCode,
-              $mrjc(
-                  imageLink.hashCode,
-                  $mrjc(lastWordsReceiver.hashCode,
-                      deathAndBirthDates.hashCode))))));
+  int get hashCode => Object.hash(
+      id, name, lastWords, imageLink, lastWordsReceiver, deathAndBirthDates);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1096,15 +1082,16 @@ class LastWordsCompanion extends UpdateCompanion<LastWord> {
 
 class $LastWordsTable extends LastWords
     with TableInfo<$LastWordsTable, LastWord> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String _alias;
-  $LastWordsTable(this._db, [this._alias]);
+  $LastWordsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedColumn<int> _id;
   @override
   GeneratedColumn<int> get id =>
       _id ??= GeneratedColumn<int>('id', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const IntType(),
           requiredDuringInsert: false,
           defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _nameMeta = const VerificationMeta('name');
@@ -1112,33 +1099,33 @@ class $LastWordsTable extends LastWords
   @override
   GeneratedColumn<String> get name =>
       _name ??= GeneratedColumn<String>('name', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _lastWordsMeta = const VerificationMeta('lastWords');
   GeneratedColumn<String> _lastWords;
   @override
   GeneratedColumn<String> get lastWords =>
       _lastWords ??= GeneratedColumn<String>('last_words', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _imageLinkMeta = const VerificationMeta('imageLink');
   GeneratedColumn<String> _imageLink;
   @override
   GeneratedColumn<String> get imageLink =>
       _imageLink ??= GeneratedColumn<String>('image_link', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _lastWordsReceiverMeta =
       const VerificationMeta('lastWordsReceiver');
   GeneratedColumn<String> _lastWordsReceiver;
   @override
   GeneratedColumn<String> get lastWordsReceiver => _lastWordsReceiver ??=
       GeneratedColumn<String>('last_words_receiver', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _deathAndBirthDatesMeta =
       const VerificationMeta('deathAndBirthDates');
   GeneratedColumn<String> _deathAndBirthDates;
   @override
   GeneratedColumn<String> get deathAndBirthDates => _deathAndBirthDates ??=
       GeneratedColumn<String>('death_and_birth_dates', aliasedName, true,
-          typeName: 'TEXT', requiredDuringInsert: false);
+          type: const StringType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
       [id, name, lastWords, imageLink, lastWordsReceiver, deathAndBirthDates];
@@ -1185,13 +1172,13 @@ class $LastWordsTable extends LastWords
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   LastWord map(Map<String, dynamic> data, {String tablePrefix}) {
-    return LastWord.fromData(data, _db,
+    return LastWord.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $LastWordsTable createAlias(String alias) {
-    return $LastWordsTable(_db, alias);
+    return $LastWordsTable(attachedDatabase, alias);
   }
 }
 

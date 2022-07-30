@@ -1,4 +1,5 @@
-import 'package:connectivity/connectivity.dart';
+ 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:quoteworld/models/dashboard.dart';
 import 'package:quoteworld/widgets/appbar_tiltle.dart';

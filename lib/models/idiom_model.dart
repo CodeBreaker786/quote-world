@@ -1,3 +1,4 @@
+ 
 import 'package:moor_flutter/moor_flutter.dart';
 
 class Idioms extends Table {

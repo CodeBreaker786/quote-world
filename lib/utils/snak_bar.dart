@@ -1,10 +1,11 @@
-import 'package:flushbar/flushbar.dart';
+ 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 void showSnackBar({context, String value, Icon icon}) {
   Flushbar(
     margin: EdgeInsets.all(8),
-    borderRadius: 8,
+    borderRadius: BorderRadius.circular(8),
     message: value,
     duration: Duration(seconds: 3),
     backgroundColor: Colors.red,
