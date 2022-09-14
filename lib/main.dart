@@ -1,26 +1,3 @@
-<<<<<<< HEAD
- 
-import 'package:flutter/material.dart';
-import 'package:quoteworld/screens/bottom_navigation_pade.dart';
-import 'package:quoteworld/utils/admob.dart';
-
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Initialize without device test ids
-  // Admob.initialize(testDeviceIds: [AdManager.appId]);
-
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.grey, accentColor: Colors.white),
-      title: 'Flutter Demo',
-      home: NavigationScreen(),
-=======
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quotes_app/blocs/search_bloc/search_bloc.dart';
@@ -54,7 +31,6 @@ class MyApp extends StatelessWidget {
         ),
         home: const HomeScreen(),
       ),
->>>>>>> 51fe6d4 (first commit)
     );
   }
 }
