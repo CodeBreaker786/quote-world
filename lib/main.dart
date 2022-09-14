@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quotes_app/blocs/search_bloc/search_bloc.dart';
-import 'package:quotes_app/screens/home/home_screen.dart';
-import 'package:quotes_app/screens/quotes/bloc/quotes_bloc.dart';
+import 'package:quoteworld/blocs/search_bloc/search_bloc.dart';
+import 'package:quoteworld/screens/home/home_screen.dart';
+import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

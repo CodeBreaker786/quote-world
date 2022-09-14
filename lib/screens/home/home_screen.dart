@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quotes_app/blocs/search_bloc/search_bloc.dart';
-import 'package:quotes_app/screens/quotes/quotes_screen.dart';
+
+import '../../blocs/search_bloc/search_bloc.dart';
+import '../quotes/quotes_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

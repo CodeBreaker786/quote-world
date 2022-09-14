@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quotes_app/screens/quotes/bloc/quotes_bloc.dart';
-import 'package:quotes_app/screens/quotes/widgets/categories_item_list.dart';
-import 'package:quotes_app/screens/quotes/quote_list_screen.dart';
+import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
+import 'package:quoteworld/screens/quotes/widgets/categories_item_list.dart';
+import 'package:quoteworld/screens/quotes/quote_list_screen.dart';
+import 'package:quoteworld/screens/quotes/widgets/categories_item_list.dart';
 
 class QuotesScreen extends StatefulWidget {
   const QuotesScreen({Key? key}) : super(key: key);

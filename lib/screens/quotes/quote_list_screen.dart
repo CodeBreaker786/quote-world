@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quotes_app/blocs/search_bloc/search_bloc.dart';
+import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
+import 'package:quoteworld/screens/quotes/widgets/categories_item_list.dart';
 
-import 'package:quotes_app/screens/quotes/bloc/quotes_bloc.dart';
-
-import 'package:quotes_app/screens/quotes/widgets/categories_item_list.dart';
-import 'package:quotes_app/widgets/social_share.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../blocs/search_bloc/search_bloc.dart';
+import '../../widgets/social_share.dart';
 
 class QuotesListScreen extends StatefulWidget {
   final CategoryItem? category;

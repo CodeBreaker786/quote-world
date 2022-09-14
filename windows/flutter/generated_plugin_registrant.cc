@@ -6,18 +6,9 @@
 
 #include "generated_plugin_registrant.h"
 
-<<<<<<< HEAD
-#include <connectivity_plus_windows/connectivity_plus_windows_plugin.h>
 #include <flutter_tts/flutter_tts_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  ConnectivityPlusWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
-=======
-#include <flutter_tts/flutter_tts_plugin.h>
-
-void RegisterPlugins(flutter::PluginRegistry* registry) {
->>>>>>> 51fe6d4 (first commit)
   FlutterTtsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterTtsPlugin"));
 }

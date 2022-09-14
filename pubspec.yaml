@@ -1,63 +1,4 @@
-<<<<<<< HEAD
 name: quoteworld
-description: A new Flutter application.
-
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
-version: 1.0.0+1
-
-environment:
-  sdk: ">=2.7.0 <3.0.0"
-
-dependencies:
-  path_provider: ^2.0.11
-  flutter_tts: ^3.5.0
-  scrollable_positioned_list: ^0.3.2
-  another_flushbar: ^1.10.29
-  curved_navigation_bar: ^1.0.3
-  stepper_counter_swipe: ^1.0.2
-  font_awesome_flutter: ^10.1.0
-  connectivity_plus: ^2.3.6
-  social_share: ^2.2.1
-  web_scraper: ^0.1.4
-  
-  moor_flutter: ^4.0.0-nullsafety
-  http: ^0.13.4
-  html: ^0.15.0
-  cupertino_icons: ^1.0.5
-  # admob_flutter: ^2.0.0
-  flutter:
-    sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-   
-#    flutter packages pub run build_runner watch
-dev_dependencies:
-  flutter_native_splash: ^2.2.6
-  flutter_launcher_icons: ^0.9.3
-  moor_generator: ^4.6.0+1
-  build_runner: ^2.2.0
-  flutter_test:
-    sdk: flutter
-#  flutter pub pub run flutter_native_splash:create
-flutter_native_splash:
-  image: assets/logos/splashlogo.png
-  color: "ffffff"
-
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/logos/splashlogo.png"
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
-flutter:
-=======
-name: quotes_app
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -127,7 +68,6 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
->>>>>>> 51fe6d4 (first commit)
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -136,24 +76,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-<<<<<<< HEAD
-    - assets/logos/
-
-  fonts:
-    - family: myfont
-      fonts:
-        - asset: assets/Lobster-Regular.ttf
-          style: italic
-
-    - family: primaryfont
-      fonts:
-        - asset: assets/NotoSansKR-Regular.otf
-          style: italic
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-=======
     - assets/quotes_categories/
      
 
@@ -163,7 +85,6 @@ flutter:
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
->>>>>>> 51fe6d4 (first commit)
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

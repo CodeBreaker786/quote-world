@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as paths;
-import 'package:quotes_app/models/item_model.dart';
+
+import '../models/item_model.dart';
 
 part 'moor_curd.g.dart';
 

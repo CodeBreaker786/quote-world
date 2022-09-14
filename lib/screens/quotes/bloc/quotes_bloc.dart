@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
-import 'package:quotes_app/crud/moor_curd.dart';
-import 'package:quotes_app/models/item_model.dart';
+
+import '../../../crud/moor_curd.dart';
+
 part 'quotes_event.dart';
 part 'quotes_state.dart';
 
