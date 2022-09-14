@@ -3,7 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+<<<<<<< HEAD
   connectivity_plus_windows
+=======
+>>>>>>> 51fe6d4 (first commit)
   flutter_tts
 )
 

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 cmake_minimum_required(VERSION 3.15)
+=======
+# This file controls Flutter-level build steps. It should not be edited.
+cmake_minimum_required(VERSION 3.14)
+>>>>>>> 51fe6d4 (first commit)
 
 set(EPHEMERAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ephemeral")
 
@@ -23,6 +28,10 @@ list(APPEND FLUTTER_LIBRARY_HEADERS
   "flutter_windows.h"
   "flutter_messenger.h"
   "flutter_plugin_registrar.h"
+<<<<<<< HEAD
+=======
+  "flutter_texture_registrar.h"
+>>>>>>> 51fe6d4 (first commit)
 )
 list(TRANSFORM FLUTTER_LIBRARY_HEADERS PREPEND "${EPHEMERAL_DIR}/")
 add_library(flutter INTERFACE)
@@ -34,8 +43,13 @@ add_dependencies(flutter flutter_assemble)
 
 # === Wrapper ===
 list(APPEND CPP_WRAPPER_SOURCES_CORE
+<<<<<<< HEAD
   "engine_method_result.cc"
 	"standard_codec.cc"
+=======
+  "core_implementations.cc"
+  "standard_codec.cc"
+>>>>>>> 51fe6d4 (first commit)
 )
 list(TRANSFORM CPP_WRAPPER_SOURCES_CORE PREPEND "${WRAPPER_ROOT}/")
 list(APPEND CPP_WRAPPER_SOURCES_PLUGIN
@@ -43,6 +57,10 @@ list(APPEND CPP_WRAPPER_SOURCES_PLUGIN
 )
 list(TRANSFORM CPP_WRAPPER_SOURCES_PLUGIN PREPEND "${WRAPPER_ROOT}/")
 list(APPEND CPP_WRAPPER_SOURCES_APP
+<<<<<<< HEAD
+=======
+  "flutter_engine.cc"
+>>>>>>> 51fe6d4 (first commit)
   "flutter_view_controller.cc"
 )
 list(TRANSFORM CPP_WRAPPER_SOURCES_APP PREPEND "${WRAPPER_ROOT}/")
@@ -79,15 +97,28 @@ add_dependencies(flutter_wrapper_app flutter_assemble)
 # _phony_ is a non-existent file to force this command to run every time,
 # since currently there's no way to get a full input/output list from the
 # flutter tool.
+<<<<<<< HEAD
+=======
+set(PHONY_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/_phony_")
+set_source_files_properties("${PHONY_OUTPUT}" PROPERTIES SYMBOLIC TRUE)
+>>>>>>> 51fe6d4 (first commit)
 add_custom_command(
   OUTPUT ${FLUTTER_LIBRARY} ${FLUTTER_LIBRARY_HEADERS}
     ${CPP_WRAPPER_SOURCES_CORE} ${CPP_WRAPPER_SOURCES_PLUGIN}
     ${CPP_WRAPPER_SOURCES_APP}
+<<<<<<< HEAD
     ${CMAKE_CURRENT_BINARY_DIR}/_phony_
+=======
+    ${PHONY_OUTPUT}
+>>>>>>> 51fe6d4 (first commit)
   COMMAND ${CMAKE_COMMAND} -E env
     ${FLUTTER_TOOL_ENVIRONMENT}
     "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.bat"
       windows-x64 $<CONFIG>
+<<<<<<< HEAD
+=======
+  VERBATIM
+>>>>>>> 51fe6d4 (first commit)
 )
 add_custom_target(flutter_assemble DEPENDS
   "${FLUTTER_LIBRARY}"

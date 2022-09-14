@@ -122,9 +122,17 @@ bool Win32Window::CreateAndShow(const std::wstring& title,
       Scale(size.width, scale_factor), Scale(size.height, scale_factor),
       nullptr, nullptr, GetModuleHandle(nullptr), this);
 
+<<<<<<< HEAD
   OnCreate();
 
   return window != nullptr;
+=======
+  if (!window) {
+    return false;
+  }
+
+  return OnCreate();
+>>>>>>> 51fe6d4 (first commit)
 }
 
 // static
@@ -152,6 +160,7 @@ Win32Window::MessageHandler(HWND hwnd,
                             UINT const message,
                             WPARAM const wparam,
                             LPARAM const lparam) noexcept {
+<<<<<<< HEAD
   auto window =
       reinterpret_cast<Win32Window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
@@ -159,6 +168,8 @@ Win32Window::MessageHandler(HWND hwnd,
     return 0;
   }
 
+=======
+>>>>>>> 51fe6d4 (first commit)
   switch (message) {
     case WM_DESTROY:
       window_handle_ = nullptr;
@@ -178,26 +189,38 @@ Win32Window::MessageHandler(HWND hwnd,
 
       return 0;
     }
+<<<<<<< HEAD
     case WM_SIZE:
       RECT rect;
       GetClientRect(hwnd, &rect);
+=======
+    case WM_SIZE: {
+      RECT rect = GetClientArea();
+>>>>>>> 51fe6d4 (first commit)
       if (child_content_ != nullptr) {
         // Size and position the child window.
         MoveWindow(child_content_, rect.left, rect.top, rect.right - rect.left,
                    rect.bottom - rect.top, TRUE);
       }
       return 0;
+<<<<<<< HEAD
+=======
+    }
+>>>>>>> 51fe6d4 (first commit)
 
     case WM_ACTIVATE:
       if (child_content_ != nullptr) {
         SetFocus(child_content_);
       }
       return 0;
+<<<<<<< HEAD
 
     // Messages that are directly forwarded to embedding.
     case WM_FONTCHANGE:
       SendMessage(child_content_, WM_FONTCHANGE, NULL, NULL);
       return 0;
+=======
+>>>>>>> 51fe6d4 (first commit)
   }
 
   return DefWindowProc(window_handle_, message, wparam, lparam);
@@ -223,8 +246,12 @@ Win32Window* Win32Window::GetThisFromHandle(HWND const window) noexcept {
 void Win32Window::SetChildContent(HWND content) {
   child_content_ = content;
   SetParent(content, window_handle_);
+<<<<<<< HEAD
   RECT frame;
   GetClientRect(window_handle_, &frame);
+=======
+  RECT frame = GetClientArea();
+>>>>>>> 51fe6d4 (first commit)
 
   MoveWindow(content, frame.left, frame.top, frame.right - frame.left,
              frame.bottom - frame.top, true);
@@ -232,6 +259,15 @@ void Win32Window::SetChildContent(HWND content) {
   SetFocus(child_content_);
 }
 
+<<<<<<< HEAD
+=======
+RECT Win32Window::GetClientArea() {
+  RECT frame;
+  GetClientRect(window_handle_, &frame);
+  return frame;
+}
+
+>>>>>>> 51fe6d4 (first commit)
 HWND Win32Window::GetHandle() {
   return window_handle_;
 }
@@ -240,8 +276,14 @@ void Win32Window::SetQuitOnClose(bool quit_on_close) {
   quit_on_close_ = quit_on_close;
 }
 
+<<<<<<< HEAD
 void Win32Window::OnCreate() {
   // No-op; provided for subclasses.
+=======
+bool Win32Window::OnCreate() {
+  // No-op; provided for subclasses.
+  return true;
+>>>>>>> 51fe6d4 (first commit)
 }
 
 void Win32Window::OnDestroy() {

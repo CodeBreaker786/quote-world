@@ -3,4 +3,8 @@
 **/Pods/
 
 # Xcode-related
+<<<<<<< HEAD
+=======
+**/dgph
+>>>>>>> 51fe6d4 (first commit)
 **/xcuserdata/
