@@ -1,4 +1,4 @@
-package com.example.quotes_app
+package com.example.quoteworld
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quoteworld/blocs/search_bloc/search_bloc.dart';
 import 'package:quoteworld/screens/home/home_screen.dart';
 import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return MultiBlocProvider(
       providers: [
         BlocProvider<QuotesBloc>(
@@ -27,8 +29,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.montserratTextTheme(textTheme)),
         home: const HomeScreen(),
       ),
     );

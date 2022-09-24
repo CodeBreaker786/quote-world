@@ -5,18 +5,17 @@ import 'package:social_share/social_share.dart';
 
 class SocialShareRow extends StatefulWidget {
   final String? content;
-  final bool showbacground;
+
   final String? type;
   bool showSaveButton;
   Function? ontap;
-  SocialShareRow(
-      {Key? key,
-      @required this.content,
-      @required this.type,
-      @required this.ontap,
-      this.showSaveButton = true,
-      this.showbacground = true})
-      : super(key: key);
+  SocialShareRow({
+    Key? key,
+    @required this.content,
+    @required this.type,
+    @required this.ontap,
+    this.showSaveButton = true,
+  }) : super(key: key);
 
   @override
   _SocialShareRowState createState() => _SocialShareRowState();
@@ -37,16 +36,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          widget.showSaveButton
-              ? _buildShareTileIconCard(
-                  icon: const Icon(
-                    FontAwesomeIcons.solidHeart,
-                    color: Colors.red,
-                  ),
-                  callback: () => widget.ontap!(),
-                )
-              : const SizedBox(),
-          _buildShareTileIconCard(
+          buildShareTileIconCard(
               icon: const Icon(
                 FontAwesomeIcons.volumeLow,
                 color: Colors.green,
@@ -54,7 +44,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
               callback: () async {
                 await flutterTts.speak(widget.content!);
               }),
-          _buildShareTileIconCard(
+          buildShareTileIconCard(
             icon: const Icon(
               FontAwesomeIcons.copy,
               color: Colors.teal,
@@ -63,7 +53,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
               await SocialShare.copyToClipboard(widget.content).then((data) {});
             },
           ),
-          _buildShareTileIconCard(
+          buildShareTileIconCard(
             callback: () async {
               await SocialShare.shareSms(widget.content!,
                       trailingText: '', url: '')
@@ -74,7 +64,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
               color: Colors.blueAccent,
             ),
           ),
-          _buildShareTileIconCard(
+          buildShareTileIconCard(
             callback: () async {
               await SocialShare.shareTwitter(widget.content!,
                       trailingText: '', url: '')
@@ -85,7 +75,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
               color: Colors.blue,
             ),
           ),
-          _buildShareTileIconCard(
+          buildShareTileIconCard(
             callback: () async {
               await SocialShare.shareWhatsapp(widget.content!).then((data) {});
             },
@@ -94,7 +84,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
               color: Colors.green,
             ),
           ),
-          _buildShareTileIconCard(
+          buildShareTileIconCard(
             callback: () async {
               await SocialShare.shareOptions(widget.content!).then((data) {});
             },
@@ -108,25 +98,26 @@ class _SocialShareRowState extends State<SocialShareRow> {
     );
   }
 
-  _buildShareTileIconCard({Icon? icon, VoidCallback? callback}) {
-    return InkWell(
-      onTap: callback,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(.3),
-              blurRadius: 4.0,
-            ),
-          ],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: icon,
-        ),
+  
+}
+buildShareTileIconCard({Icon? icon, VoidCallback? callback}) {
+  return InkWell(
+    onTap: callback,
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.3),
+            blurRadius: 4.0,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(10),
       ),
-    );
-  }
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: icon,
+      ),
+    ),
+  );
 }
