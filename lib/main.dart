@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quoteworld/blocs/search_bloc/search_bloc.dart';
 import 'package:quoteworld/screens/home/home_screen.dart';
 import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // FlutterNativeSplash.remove()
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.delayed(const Duration(seconds: 2));
+  FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
 
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.montserratTextTheme(textTheme)),
-        home: const HomeScreen(),
+        home: HomeScreen(),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
 import 'package:quoteworld/screens/quotes/widgets/categories_item_list.dart';
 import 'package:quoteworld/screens/quotes/widgets/quote_loading_tile.dart';
 import 'package:quoteworld/screens/quotes/widgets/quote_tile.dart';
+import 'package:quoteworld/widgets/like_badge.dart';
 
 import 'package:shimmer/shimmer.dart';
 
@@ -59,7 +60,7 @@ class _QuotesListScreenState extends State<QuotesListScreen> {
                     height: MediaQuery.of(context).size.height * .05,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -77,9 +78,7 @@ class _QuotesListScreenState extends State<QuotesListScreen> {
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(
-                          width: 40,
-                        )
+                        LikeBadge()
                       ],
                     ),
                   ),

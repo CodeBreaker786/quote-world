@@ -6,6 +6,7 @@ import 'package:quoteworld/screens/quotes/widgets/quote_tile.dart';
 class QuoteDetail extends StatelessWidget {
   final Item item;
   final String appBarTitle;
+
   const QuoteDetail({Key? key, required this.item, required this.appBarTitle})
       : super(key: key);
 

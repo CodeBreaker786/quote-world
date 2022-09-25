@@ -4,15 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quoteworld/crud/moor_curd.dart';
+import 'package:quoteworld/crud/quote_crud/quote_crud.dart';
 
 import 'package:quoteworld/widgets/social_share.dart';
 
 import 'categories_item_list.dart';
 
-class QuoteTile extends StatelessWidget {
+class QuoteTile extends StatefulWidget {
   final int? index;
   final Item quote;
-  const QuoteTile({super.key, this.index, required this.quote});
+
+  final quoteDao = QuoteDao(AppDatabase());
+
+  QuoteTile({super.key, this.index, required this.quote});
+
+  @override
+  State<QuoteTile> createState() => _QuoteTileState();
+}
+
+class _QuoteTileState extends State<QuoteTile> {
+  bool isLiked = false;
+  @override
+  void initState() {
+    isLiked = widget.quote.isLiked;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +57,23 @@ class QuoteTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         buildShareTileIconCard(
-                          icon: const Icon(
-                            FontAwesomeIcons.solidHeart,
+                          icon: Icon(
+                            isLiked
+                                ? FontAwesomeIcons.solidHeart
+                                : FontAwesomeIcons.heart,
                             color: Colors.red,
                           ),
-                          callback: () {},
+                          callback: () async {
+                            setState(() {
+                              isLiked = !isLiked;
+                            });
+                            if (isLiked) {
+                              await widget.quoteDao.insertQuote(
+                                  widget.quote.copyWith(isLiked: true));
+                            } else {
+                              await widget.quoteDao.deleteQuote(widget.quote);
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -64,22 +92,25 @@ class QuoteTile extends StatelessWidget {
                       ],
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: quote.imageUrl == null
+                    child: widget.quote.imageUrl == null
                         ? const Icon(
                             Icons.person,
                             size: 70,
                             color: Colors.grey,
                           )
                         : Image.network(
-                            quote.imageUrl!,
+                            widget.quote.imageUrl!,
                             fit: BoxFit.cover,
                           ),
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       children: [
-                        Text(quote.content!,
+                        Text(widget.quote.content!,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.ranga(
                                 textStyle: TextStyle(
@@ -87,10 +118,10 @@ class QuoteTile extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                     color: colors[Random().nextInt(10) % 10]))),
                         const SizedBox(
-                          height: 12,
+                          height: 30,
                         ),
                         Text(
-                          "~${quote.quoteWriter}",
+                          "~${widget.quote.quoteWriter}",
                           style: GoogleFonts.montserrat(
                               textStyle: const TextStyle(
                                   fontSize: 20,
@@ -98,15 +129,15 @@ class QuoteTile extends StatelessWidget {
                                   color: Colors.grey)),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 50,
                         ),
-                        index != null
+                        widget.index != null
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Icon(Icons.arrow_back_ios_new),
                                   Text(
-                                    " $index ",
+                                    " ${widget.index} ",
                                     style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
                                       fontSize: 20,
@@ -147,7 +178,8 @@ class QuoteTile extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
                   child: SocialShareRow(
-                    content: "${quote.content!}\n${quote.quoteWriter}",
+                    content:
+                        "${widget.quote.content!}\n${widget.quote.quoteWriter}",
                     ontap: () {},
                     type: '',
                   )),

@@ -32,7 +32,7 @@ class _SocialShareRowState extends State<SocialShareRow> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -86,20 +86,28 @@ class _SocialShareRowState extends State<SocialShareRow> {
           ),
           buildShareTileIconCard(
             callback: () async {
+              await SocialShare.shareTelegram(widget.content!);
+            },
+            icon: const Icon(
+              FontAwesomeIcons.telegram,
+              color: Colors.blue,
+            ),
+          ),
+          buildShareTileIconCard(
+            callback: () async {
               await SocialShare.shareOptions(widget.content!).then((data) {});
             },
             icon: const Icon(
               FontAwesomeIcons.shareNodes,
-              color: Colors.brown,
+              color: Colors.black87,
             ),
           ),
         ],
       ),
     );
   }
-
-  
 }
+
 buildShareTileIconCard({Icon? icon, VoidCallback? callback}) {
   return InkWell(
     onTap: callback,

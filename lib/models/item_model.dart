@@ -9,4 +9,5 @@ class Items extends Table {
   TextColumn get imageUrl => text().nullable()();
   TextColumn get type => text().nullable()();
   TextColumn get quoteWriter => text()();
+  BoolColumn get isLiked => boolean()();
 }

@@ -16,6 +16,7 @@ class Item extends DataClass implements Insertable<Item> {
   final String? imageUrl;
   final String? type;
   final String quoteWriter;
+  final bool isLiked;
   Item(
       {this.id,
       this.content,
@@ -24,7 +25,8 @@ class Item extends DataClass implements Insertable<Item> {
       this.att3,
       this.imageUrl,
       this.type,
-      required this.quoteWriter});
+      required this.quoteWriter,
+      required this.isLiked});
   factory Item.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -44,6 +46,8 @@ class Item extends DataClass implements Insertable<Item> {
           .mapFromDatabaseResponse(data['${effectivePrefix}type']),
       quoteWriter: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}quote_writer'])!,
+      isLiked: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}is_liked'])!,
     );
   }
   @override
@@ -71,6 +75,7 @@ class Item extends DataClass implements Insertable<Item> {
       map['type'] = Variable<String?>(type);
     }
     map['quote_writer'] = Variable<String>(quoteWriter);
+    map['is_liked'] = Variable<bool>(isLiked);
     return map;
   }
 
@@ -88,6 +93,7 @@ class Item extends DataClass implements Insertable<Item> {
           : Value(imageUrl),
       type: type == null && nullToAbsent ? const Value.absent() : Value(type),
       quoteWriter: Value(quoteWriter),
+      isLiked: Value(isLiked),
     );
   }
 
@@ -103,6 +109,7 @@ class Item extends DataClass implements Insertable<Item> {
       imageUrl: serializer.fromJson<String?>(json['imageUrl']),
       type: serializer.fromJson<String?>(json['type']),
       quoteWriter: serializer.fromJson<String>(json['quoteWriter']),
+      isLiked: serializer.fromJson<bool>(json['isLiked']),
     );
   }
   @override
@@ -117,6 +124,7 @@ class Item extends DataClass implements Insertable<Item> {
       'imageUrl': serializer.toJson<String?>(imageUrl),
       'type': serializer.toJson<String?>(type),
       'quoteWriter': serializer.toJson<String>(quoteWriter),
+      'isLiked': serializer.toJson<bool>(isLiked),
     };
   }
 
@@ -128,7 +136,8 @@ class Item extends DataClass implements Insertable<Item> {
           String? att3,
           String? imageUrl,
           String? type,
-          String? quoteWriter}) =>
+          String? quoteWriter,
+          bool? isLiked}) =>
       Item(
         id: id ?? this.id,
         content: content ?? this.content,
@@ -138,6 +147,7 @@ class Item extends DataClass implements Insertable<Item> {
         imageUrl: imageUrl ?? this.imageUrl,
         type: type ?? this.type,
         quoteWriter: quoteWriter ?? this.quoteWriter,
+        isLiked: isLiked ?? this.isLiked,
       );
   @override
   String toString() {
@@ -149,14 +159,15 @@ class Item extends DataClass implements Insertable<Item> {
           ..write('att3: $att3, ')
           ..write('imageUrl: $imageUrl, ')
           ..write('type: $type, ')
-          ..write('quoteWriter: $quoteWriter')
+          ..write('quoteWriter: $quoteWriter, ')
+          ..write('isLiked: $isLiked')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, content, att1, att2, att3, imageUrl, type, quoteWriter);
+  int get hashCode => Object.hash(
+      id, content, att1, att2, att3, imageUrl, type, quoteWriter, isLiked);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -168,7 +179,8 @@ class Item extends DataClass implements Insertable<Item> {
           other.att3 == this.att3 &&
           other.imageUrl == this.imageUrl &&
           other.type == this.type &&
-          other.quoteWriter == this.quoteWriter);
+          other.quoteWriter == this.quoteWriter &&
+          other.isLiked == this.isLiked);
 }
 
 class ItemsCompanion extends UpdateCompanion<Item> {
@@ -180,6 +192,7 @@ class ItemsCompanion extends UpdateCompanion<Item> {
   final Value<String?> imageUrl;
   final Value<String?> type;
   final Value<String> quoteWriter;
+  final Value<bool> isLiked;
   const ItemsCompanion({
     this.id = const Value.absent(),
     this.content = const Value.absent(),
@@ -189,6 +202,7 @@ class ItemsCompanion extends UpdateCompanion<Item> {
     this.imageUrl = const Value.absent(),
     this.type = const Value.absent(),
     this.quoteWriter = const Value.absent(),
+    this.isLiked = const Value.absent(),
   });
   ItemsCompanion.insert({
     this.id = const Value.absent(),
@@ -199,7 +213,9 @@ class ItemsCompanion extends UpdateCompanion<Item> {
     this.imageUrl = const Value.absent(),
     this.type = const Value.absent(),
     required String quoteWriter,
-  }) : quoteWriter = Value(quoteWriter);
+    required bool isLiked,
+  })  : quoteWriter = Value(quoteWriter),
+        isLiked = Value(isLiked);
   static Insertable<Item> custom({
     Expression<int?>? id,
     Expression<String?>? content,
@@ -209,6 +225,7 @@ class ItemsCompanion extends UpdateCompanion<Item> {
     Expression<String?>? imageUrl,
     Expression<String?>? type,
     Expression<String>? quoteWriter,
+    Expression<bool>? isLiked,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -219,6 +236,7 @@ class ItemsCompanion extends UpdateCompanion<Item> {
       if (imageUrl != null) 'image_url': imageUrl,
       if (type != null) 'type': type,
       if (quoteWriter != null) 'quote_writer': quoteWriter,
+      if (isLiked != null) 'is_liked': isLiked,
     });
   }
 
@@ -230,7 +248,8 @@ class ItemsCompanion extends UpdateCompanion<Item> {
       Value<String?>? att3,
       Value<String?>? imageUrl,
       Value<String?>? type,
-      Value<String>? quoteWriter}) {
+      Value<String>? quoteWriter,
+      Value<bool>? isLiked}) {
     return ItemsCompanion(
       id: id ?? this.id,
       content: content ?? this.content,
@@ -240,6 +259,7 @@ class ItemsCompanion extends UpdateCompanion<Item> {
       imageUrl: imageUrl ?? this.imageUrl,
       type: type ?? this.type,
       quoteWriter: quoteWriter ?? this.quoteWriter,
+      isLiked: isLiked ?? this.isLiked,
     );
   }
 
@@ -270,6 +290,9 @@ class ItemsCompanion extends UpdateCompanion<Item> {
     if (quoteWriter.present) {
       map['quote_writer'] = Variable<String>(quoteWriter.value);
     }
+    if (isLiked.present) {
+      map['is_liked'] = Variable<bool>(isLiked.value);
+    }
     return map;
   }
 
@@ -283,7 +306,8 @@ class ItemsCompanion extends UpdateCompanion<Item> {
           ..write('att3: $att3, ')
           ..write('imageUrl: $imageUrl, ')
           ..write('type: $type, ')
-          ..write('quoteWriter: $quoteWriter')
+          ..write('quoteWriter: $quoteWriter, ')
+          ..write('isLiked: $isLiked')
           ..write(')'))
         .toString();
   }
@@ -337,9 +361,16 @@ class $ItemsTable extends Items with TableInfo<$ItemsTable, Item> {
   late final GeneratedColumn<String?> quoteWriter = GeneratedColumn<String?>(
       'quote_writer', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _isLikedMeta = const VerificationMeta('isLiked');
+  @override
+  late final GeneratedColumn<bool?> isLiked = GeneratedColumn<bool?>(
+      'is_liked', aliasedName, false,
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (is_liked IN (0, 1))');
   @override
   List<GeneratedColumn> get $columns =>
-      [id, content, att1, att2, att3, imageUrl, type, quoteWriter];
+      [id, content, att1, att2, att3, imageUrl, type, quoteWriter, isLiked];
   @override
   String get aliasedName => _alias ?? 'items';
   @override
@@ -383,6 +414,12 @@ class $ItemsTable extends Items with TableInfo<$ItemsTable, Item> {
               data['quote_writer']!, _quoteWriterMeta));
     } else if (isInserting) {
       context.missing(_quoteWriterMeta);
+    }
+    if (data.containsKey('is_liked')) {
+      context.handle(_isLikedMeta,
+          isLiked.isAcceptableOrUnknown(data['is_liked']!, _isLikedMeta));
+    } else if (isInserting) {
+      context.missing(_isLikedMeta);
     }
     return context;
   }

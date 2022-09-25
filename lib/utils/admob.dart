@@ -17,7 +17,7 @@ class AdManager {
     } else if (Platform.isIOS) {
       return "ca-app-pub-3940256099942544/6300978111";
     } else {
-      throw new UnsupportedError("Unsupported platform");
+      throw UnsupportedError("Unsupported platform");
     }
   }
 
@@ -27,7 +27,7 @@ class AdManager {
     } else if (Platform.isIOS) {
       return "<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>";
     } else {
-      throw new UnsupportedError("Unsupported platform");
+      throw UnsupportedError("Unsupported platform");
     }
   }
 
@@ -37,7 +37,7 @@ class AdManager {
     } else if (Platform.isIOS) {
       return "<YOUR_IOS_REWARDED_AD_UNIT_ID>";
     } else {
-      throw new UnsupportedError("Unsupported platform");
+      throw UnsupportedError("Unsupported platform");
     }
   }
 }

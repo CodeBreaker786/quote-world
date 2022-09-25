@@ -110,7 +110,8 @@ add_custom_command(
     ${CMAKE_CURRENT_BINARY_DIR}/_phony_
 =======
     ${PHONY_OUTPUT}
->>>>>>> 51fe6d4 (first commit)
+>>>>>>> 51fe6d4 (first commit
+  VERBATIM)
   COMMAND ${CMAKE_COMMAND} -E env
     ${FLUTTER_TOOL_ENVIRONMENT}
     "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.bat"

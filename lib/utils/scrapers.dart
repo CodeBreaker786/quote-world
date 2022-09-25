@@ -19,6 +19,7 @@ class Scrapers {
           content:
               e.getElementsByClassName('quoteText')[0].firstChild!.text!.trim(),
           quoteWriter: e.getElementsByClassName('authorOrTitle')[0].text.trim(),
+          isLiked: false,
           imageUrl: e.children.length == 2
               ? null
               : e.getElementsByTagName('img')[0].attributes['src'],
