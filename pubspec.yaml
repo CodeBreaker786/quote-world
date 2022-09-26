@@ -37,7 +37,7 @@ dependencies:
   path_provider: ^2.0.11
   flutter_tts: ^3.5.1
   social_share: ^2.2.1
-  flutter_native_splash: ^2.2.7
+  
   font_awesome_flutter: ^10.1.0
   
   shimmer: ^2.0.0
@@ -48,6 +48,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 #    flutter packages pub run build_runner watch
 dev_dependencies:
+  flutter_native_splash: ^2.2.7
   flutter_test:
     sdk: flutter
   moor_generator: ^4.6.0+1

@@ -23,7 +23,9 @@ _focusSearchSccreen(SearchScreenFocus event, Emitter<SearchState> emit) async {
     List<Item> items =
         await Scrapers.getQuotes(quoteSearchUrl + event.searchText);
     emit(SearchItemLoaded(items, event.searchText));
-  } else {}
+  } else {
+    emit(SearchInitial());
+  }
 }
 
 _unfocusSearchSccreen(SearchScreenUnFocus event, Emitter<SearchState> emit) {

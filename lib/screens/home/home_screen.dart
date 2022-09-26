@@ -1,11 +1,8 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quoteworld/screens/likes_screen.dart';
+import 'package:quoteworld/screens/quotes/bloc/quotes_bloc.dart';
 import 'package:quoteworld/screens/search/search_screen.dart';
 import 'package:quoteworld/widgets/like_badge.dart';
-
 import '../../blocs/search_bloc/search_bloc.dart';
 import '../../crud/moor_curd.dart';
 import '../../crud/quote_crud/quote_crud.dart';
@@ -23,23 +20,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  late TabController tabController;
   FocusNode focusNode = FocusNode();
   bool isSearchFocus = false;
   @override
   void initState() {
     super.initState();
-  }
-
-  getItemType() {
-    switch (tabController.index) {
-      case 0:
-        return ItemType.quote;
-      case 1:
-        return ItemType.phrase;
-      case 3:
-        return ItemType.idiom;
-    }
   }
 
   @override
@@ -100,18 +85,8 @@ class _HomeScreenState extends State<HomeScreen>
                                   ),
                                 ),
                                 onChanged: (value) {
-                                  if (value != '') {
-                                    BlocProvider.of<SearchBloc>(context).add(
-                                        SearchScreenFocus(
-                                            value, getItemType()));
-                                    setState(() {
-                                      isSearchFocus = true;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      isSearchFocus = false;
-                                    });
-                                  }
+                                  BlocProvider.of<SearchBloc>(context).add(
+                                      SearchScreenFocus(value, ItemType.quote));
                                 }),
                           ),
                         ),
@@ -132,28 +107,13 @@ class _HomeScreenState extends State<HomeScreen>
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30),
                                   topRight: Radius.circular(30))),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      topRight: Radius.circular(30)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(.3),
-                                      blurRadius: 4.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: isSearchFocus
-                                    ? const SearchSCreen()
-                                    : const QuotesScreen(),
-                              ),
-                            ],
+                          child: BlocBuilder<SearchBloc, SearchState>(
+                            builder: (context, state) {
+                              return state is SearchLoadingInProgress ||
+                                      state is SearchItemLoaded
+                                  ? const SearchSCreen()
+                                  : const QuotesScreen();
+                            },
                           )))
                 ])));
   }
