@@ -14,39 +14,17 @@ class QuotesScreen extends StatefulWidget {
 }
 
 class _QuotesScreenState extends State<QuotesScreen> {
-  BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
 
   @override
   void initState() {
-    // BannerAd(
-    //   adUnitId: AdManager.bannerAdUnitId,
-    //   request: const AdRequest(),
-    //   size: AdSize.banner,
-    //   listener: BannerAdListener(
-    //     onAdLoaded: (ad) {
-    //       setState(() {
-    //         _bannerAd = ad as BannerAd;
-    //       });
-    //     },
-    //     onAdFailedToLoad: (ad, err) {
-    //       print('Failed to load a banner ad: ${err.message}');
-    //       ad.dispose();
-    //     },
-    //   ),
-    // ).load();
     _loadInterstitialAd();
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  void _loadInterstitialAd() async {
+  _loadInterstitialAd() async {
     await InterstitialAd.load(
-      adUnitId: AdManager.rewardedAdUnitId,
+      adUnitId: AdManager.interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -56,9 +34,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
             },
           );
 
-          setState(() {
-            _interstitialAd = ad;
-          });
+          _interstitialAd = ad;
         },
         onAdFailedToLoad: (err) {
           print('Failed to load an interstitial ad: ${err.message}');
@@ -68,7 +44,11 @@ class _QuotesScreenState extends State<QuotesScreen> {
   }
 
   @override
-  void dispose() {
+  void dispose()  {
+    if(_interstitialAd!=null){
+        _interstitialAd!.dispose();
+    }
+  
     super.dispose();
   }
 
@@ -87,8 +67,8 @@ class _QuotesScreenState extends State<QuotesScreen> {
           return InkWell(
             onTap: () async {
               BlocProvider.of<QuotesBloc>(context).add(ResetQuotesEvent());
-              _loadInterstitialAd();
-              _interstitialAd!.show();
+              await _loadInterstitialAd();
+              await _interstitialAd!.show();
               Navigator.push(
                   context,
                   MaterialPageRoute(

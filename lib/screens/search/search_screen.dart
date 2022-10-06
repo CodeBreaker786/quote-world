@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quoteworld/blocs/search_bloc/search_bloc.dart';
 import 'package:quoteworld/screens/quotes/widgets/quote_detail_screen.dart';
 import 'package:quoteworld/screens/quotes/widgets/quote_tile.dart';
 
+import '../../utils/admob.dart';
 import '../quotes/widgets/categories_item_list.dart';
 
 class SearchSCreen extends StatefulWidget {
@@ -16,6 +18,50 @@ class SearchSCreen extends StatefulWidget {
 }
 
 class _SearchSCreenState extends State<SearchSCreen> {
+  InterstitialAd? _interstitialAd;
+
+  _loadInterstitialAd() async {
+    await InterstitialAd.load(
+      adUnitId: AdManager.interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdImpression: ((ad) => ad.dispose()),
+            onAdClicked: (ad) => ad.dispose(),
+            onAdShowedFullScreenContent: ((ad) => ad.dispose()),
+            onAdWillDismissFullScreenContent: (ad) async {
+              await ad.dispose();
+            },
+            onAdDismissedFullScreenContent: (ad) async {
+              await ad.dispose();
+            },
+          );
+
+          _interstitialAd = ad;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    _loadInterstitialAd();
+    super.initState();
+  }
+
+  @override
+  void dispose()  {
+   if(_interstitialAd!=null){
+        _interstitialAd!.dispose();
+    }
+  
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
@@ -31,7 +77,12 @@ class _SearchSCreenState extends State<SearchSCreen> {
             return Padding(
               padding: const EdgeInsets.all(12.0),
               child: InkWell(
-                onTap: () {
+                onTap: () async {
+                  await _loadInterstitialAd();
+                  if (_interstitialAd != null) {
+                    _interstitialAd!.show();
+                  }
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(

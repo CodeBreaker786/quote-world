@@ -23,7 +23,7 @@ class AdManager {
 
   static String get interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return "ca-app-pub-3940256099942544/1033173712";
+      return "ca-app-pub-7273793943637838/2725292846";
     } else if (Platform.isIOS) {
       return "<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>";
     } else {
@@ -33,7 +33,7 @@ class AdManager {
 
   static String get rewardedAdUnitId {
     if (Platform.isAndroid) {
-      return "ca-app-pub-7273793943637838/2986174960";
+      return "ca-app-pub-7273793943637838/3882122535";
     } else if (Platform.isIOS) {
       return "<YOUR_IOS_REWARDED_AD_UNIT_ID>";
     } else {
